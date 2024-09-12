@@ -56,6 +56,13 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
+    loader: () => {
+      const token = getCookie("ssTok");
+      if (token) {
+        throw redirect("/home");
+      }
+      return null;
+    },
     action: async ({ request }) => {
       const loadingToast = toast.loading("Registrando...");
       const formData = await request.formData();
