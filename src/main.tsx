@@ -34,6 +34,18 @@ const router = createBrowserRouter([
     },
     errorElement: <Home />,
   },
+  {
+    path: "/",
+    element: <Home />,
+    loader: () => {
+      const token = getCookie("ssTok");
+      if (!token) {
+        throw "redirect to login";
+      }
+      return null;
+    },
+    errorElement: <Login />,
+  },
 ]);
 
 createRoot(document.getElementById("root")!).render(
