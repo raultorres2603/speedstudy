@@ -19,11 +19,10 @@ const router = createBrowserRouter([
     loader: () => {
       const token = getCookie("ssTok");
       if (token) {
-        throw "redirect to home";
+        throw redirect("/home");
       }
       return null;
     },
-    errorElement: <Login />,
   },
   {
     path: "/home",
@@ -34,7 +33,6 @@ const router = createBrowserRouter([
       const password = formData.get("password");
       try {
         await logIn(username as string, password as string);
-        // Crear cookie aqui
         return true;
       } catch (error) {
         console.log(error);
