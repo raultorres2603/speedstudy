@@ -32,11 +32,11 @@ const router = createBrowserRouter([
       const username = formData.get("username");
       const password = formData.get("password");
       try {
-        await logIn(username as string, password as string);
-        return true;
+        const token = await logIn(username as string, password as string);
+        return redirect("/home?user=" + token);
       } catch (error) {
         console.log(error);
-        throw redirect("/login?error=500");
+        throw redirect("/login?error=" + error);
       }
     },
   },

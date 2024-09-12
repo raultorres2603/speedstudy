@@ -6,8 +6,8 @@ export const Login = () => {
   const [searchParams] = useSearchParams();
 
   useEffect(() => {
-    if (searchParams.get("error") === "500") {
-      toast.error("Error!");
+    if (searchParams.get("error")) {
+      toast.error(searchParams.get("error"));
     }
   }, [searchParams]);
   return (
