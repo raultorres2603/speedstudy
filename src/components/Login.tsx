@@ -1,8 +1,6 @@
-export const Login = () => {
-  const handleLogIn = (e: React.FormEvent) => {
-    e.preventDefault();
-  };
+import { Form } from "react-router-dom";
 
+export const Login = () => {
   return (
     <div className="logInComp">
       <div className="grid grid-rows-1">
@@ -12,7 +10,7 @@ export const Login = () => {
         </div>
       </div>
       <div className="formToLogIn">
-        <form onSubmit={handleLogIn}>
+        <Form method="post" action="/home">
           <div className="grid grid-cols-2 gap-4 mx-5">
             <input
               type="text"
@@ -37,7 +35,7 @@ export const Login = () => {
               Log In
             </button>
           </div>
-        </form>
+        </Form>
       </div>
     </div>
   );

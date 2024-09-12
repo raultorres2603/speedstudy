@@ -1,10 +1,15 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  redirect,
+  RouterProvider,
+} from "react-router-dom";
 import { Login } from "./components/Login";
 import { Home } from "./components/Home";
 import { getCookie } from "./functions/cookies";
+import { logIn } from "./functions/user";
 
 const router = createBrowserRouter([
   {
@@ -17,19 +22,24 @@ const router = createBrowserRouter([
       }
       return null;
     },
-    errorElement: <Home />,
+    errorElement: <Login />,
   },
   {
-    path: "/",
+    path: "/home",
     element: <Home />,
-    loader: () => {
-      const token = getCookie("ssTok");
-      if (!token) {
-        throw "redirect to login";
+    action: async ({ request }) => {
+      const formData = await request.formData();
+      const username = formData.get("username");
+      const password = formData.get("password");
+      try {
+        await logIn(username as string, password as string);
+        // Crear cookie aqui
+        return true;
+      } catch (error) {
+        console.log(error);
+        throw redirect("/login");
       }
-      return null;
     },
-    errorElement: <Login />,
   },
 ]);
 
