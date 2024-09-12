@@ -1,12 +1,9 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import {
-  createBrowserRouter,
-  redirect,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Login } from "./components/Login";
+import { Home } from "./components/Home";
 
 const getCookie = (cname: string) => {
   const name = cname + "=";
@@ -31,10 +28,11 @@ const router = createBrowserRouter([
     loader: () => {
       const token = getCookie("ssTok");
       if (token) {
-        return redirect("/");
+        throw "redirect to home";
       }
       return null;
     },
+    errorElement: <Home />,
   },
 ]);
 
