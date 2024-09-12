@@ -7,7 +7,26 @@ export const Login = () => {
 
   useEffect(() => {
     if (searchParams.get("error")) {
-      toast.error(searchParams.get("error"));
+      switch (searchParams.get("error")) {
+        case "402":
+          toast.error("Password erróneo");
+          break;
+
+        case "404":
+          toast.error("Usuario no encontrado");
+          break;
+
+        case "501":
+          toast.error("Error en la base de datos");
+          break;
+
+        case "500":
+          toast.error("Error en el servidor");
+          break;
+
+        default:
+          break;
+      }
     }
   }, [searchParams]);
   return (

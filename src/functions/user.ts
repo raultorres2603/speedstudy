@@ -8,7 +8,7 @@ export const logIn = async (username: string, password: string) => {
   });
 
   if (!reqLogin.ok) {
-    throw reqLogin.statusText;
+    throw reqLogin.status;
   }
   return reqLogin;
 };

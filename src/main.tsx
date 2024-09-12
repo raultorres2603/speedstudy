@@ -35,7 +35,6 @@ const router = createBrowserRouter([
         const token = await logIn(username as string, password as string);
         return redirect("/home?user=" + token);
       } catch (error) {
-        console.log(error);
         throw redirect("/login?error=" + error);
       }
     },
