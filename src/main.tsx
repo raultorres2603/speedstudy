@@ -29,7 +29,7 @@ const router = createBrowserRouter([
     path: "/login",
     element: <Login />,
     loader: () => {
-      const token = getCookie("token");
+      const token = getCookie("ssTok");
       if (token) {
         return redirect("/");
       }
