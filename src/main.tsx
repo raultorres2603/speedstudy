@@ -27,6 +27,13 @@ const router = createBrowserRouter([
   {
     path: "/home",
     element: <Home />,
+    loader: () => {
+      const token = getCookie("ssTok");
+      if (!token) {
+        throw redirect("/login");
+      }
+      return null;
+    },
     action: async ({ request }) => {
       const formData = await request.formData();
       const username = formData.get("username");
