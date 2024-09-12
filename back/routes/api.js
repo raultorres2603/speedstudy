@@ -34,12 +34,47 @@ router.post("/login", async function (req, res, next) {
             .setProtectedHeader({ alg: "HS256" })
             .setExpirationTime("1h")
             .sign(new TextEncoder().encode(process.env.SKT));
-          res.status(200).send(token);
+          res.status(200).json({ token: token });
         } else {
-          res.status(402).send("Wrong password");
+          res.status(418).send("Wrong password");
         }
       } else {
         res.status(404).send("Usuario no encontrado");
+      }
+    } catch (error) {
+      res.status(501).send("Error on finding");
+    }
+  } catch (error) {
+    res.status(500).send("Error on connecting");
+  }
+});
+
+router.post("/register", async function (req, res, next) {
+  const username = req.body.username;
+  const password = req.body.password;
+  try {
+    await client.connect();
+
+    try {
+      // check if user exists
+      const result = await client.db("sscards").collection("users").findOne({
+        username: username,
+      });
+      if (result) {
+        res.status(418).send("User already exists");
+      } else {
+        try {
+          const result = await client
+            .db("sscards")
+            .collection("users")
+            .insertOne({
+              username: username,
+              password: bcrypt.hashSync(password, parseInt(process.env.SR)),
+            });
+          res.status(200).send(result);
+        } catch (error) {
+          res.status(501).send("Error on inserting");
+        }
       }
     } catch (error) {
       res.status(501).send("Error on finding");
