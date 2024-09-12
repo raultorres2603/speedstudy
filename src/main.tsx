@@ -10,6 +10,7 @@ import { Login } from "./components/Login";
 import { Home } from "./components/Home";
 import { getCookie } from "./functions/cookies";
 import { logIn } from "./functions/user";
+import { Toaster } from "react-hot-toast";
 
 const router = createBrowserRouter([
   {
@@ -37,7 +38,7 @@ const router = createBrowserRouter([
         return true;
       } catch (error) {
         console.log(error);
-        throw redirect("/login");
+        throw redirect("/login?error=500");
       }
     },
   },
@@ -45,6 +46,7 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
+    <Toaster />
     <RouterProvider router={router} />
   </StrictMode>
 );

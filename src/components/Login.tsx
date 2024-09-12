@@ -1,6 +1,15 @@
-import { Form } from "react-router-dom";
+import { useEffect } from "react";
+import toast from "react-hot-toast";
+import { Form, useSearchParams } from "react-router-dom";
 
 export const Login = () => {
+  const [searchParams] = useSearchParams();
+
+  useEffect(() => {
+    if (searchParams.get("error") === "500") {
+      toast.error("Error!");
+    }
+  }, [searchParams]);
   return (
     <div className="logInComp">
       <div className="grid grid-rows-1">
