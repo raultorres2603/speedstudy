@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import {
   createBrowserRouter,
+  defer,
   redirect,
   RouterProvider,
 } from "react-router-dom";
@@ -12,6 +13,7 @@ import { getCookie, setCookie } from "./functions/cookies";
 import { logIn, register, getInfo } from "./functions/user";
 import { Register } from "./components/Register";
 import toast, { Toaster } from "react-hot-toast";
+import { Layout } from "./components/Layout";
 
 const router = createBrowserRouter([
   {
@@ -27,7 +29,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/home",
-    element: <Home />,
+    element: (
+      <Layout title="Inicio">
+        <Home />
+      </Layout>
+    ),
     loader: async () => {
       const token = getCookie("ssTok");
       if (!token) {
