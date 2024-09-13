@@ -14,7 +14,6 @@ import { logIn, register, getInfo } from "./functions/user";
 import { Register } from "./components/Register";
 import toast, { Toaster } from "react-hot-toast";
 import { Layout } from "./components/Layout";
-import { Cookies } from "react-cookie";
 
 const router = createBrowserRouter([
   {
@@ -47,7 +46,7 @@ const router = createBrowserRouter([
       } catch (error) {
         switch (error) {
           case "401":
-            new Cookies().remove("ssTok");
+            setCookie("ssTok", "", 0);
             throw redirect("/login");
             break;
           default:
