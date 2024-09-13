@@ -3,17 +3,18 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import {
   createBrowserRouter,
-  defer,
   redirect,
   RouterProvider,
 } from "react-router-dom";
 import { Login } from "./components/Login";
 import { Home } from "./components/Home";
+import { NewTheme } from "./components/NewTheme";
 import { getCookie, setCookie } from "./functions/cookies";
 import { logIn, register, getInfo } from "./functions/user";
 import { Register } from "./components/Register";
 import toast, { Toaster } from "react-hot-toast";
 import { Layout } from "./components/Layout";
+import { Cookies } from "react-cookie";
 
 const router = createBrowserRouter([
   {
@@ -40,8 +41,19 @@ const router = createBrowserRouter([
         throw redirect("/login");
       }
       setCookie("ssTok", token, 1);
-      const userInfo = await getInfo(token);
-      return await userInfo.json();
+      try {
+        const userInfo = await getInfo(token);
+        return await userInfo.json();
+      } catch (error) {
+        switch (error) {
+          case "401":
+            new Cookies().remove("ssTok");
+            throw redirect("/login");
+            break;
+          default:
+            break;
+        }
+      }
     },
     action: async ({ request }) => {
       const loadingToast = toast.loading("Entrando...");
@@ -85,6 +97,26 @@ const router = createBrowserRouter([
         toast.dismiss(loadingToast);
       }
     },
+  },
+  {
+    path: "/theme",
+    children: [
+      {
+        path: "new",
+        loader: () => {
+          const token = getCookie("ssTok");
+          if (!token) {
+            throw redirect("/login");
+          }
+          return null;
+        },
+        element: (
+          <Layout title="Nuevo tema" goBack="/home">
+            <NewTheme />
+          </Layout>
+        ),
+      },
+    ],
   },
 ]);
 

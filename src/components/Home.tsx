@@ -1,7 +1,5 @@
-import { useLoaderData, Link, redirect } from "react-router-dom";
+import { useLoaderData, Link } from "react-router-dom";
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
-import { useCookies } from "react-cookie";
-import { useEffect } from "react";
 
 interface User {
   username: string;
@@ -10,15 +8,7 @@ interface User {
 }
 
 export const Home = () => {
-  const [cookies] = useCookies(["ssTok"]);
   const data = useLoaderData() as { user: User };
-  console.log(data.user);
-
-  useEffect(() => {
-    if (!cookies.ssTok) {
-      redirect("/login");
-    }
-  }, [cookies.ssTok]);
 
   return (
     <div className="home">
@@ -28,7 +18,7 @@ export const Home = () => {
             <span className="text-red-500 text-3xl">T</span>emas
           </div>
           <Link
-            to={"/createTheme"}
+            to={"/theme/new"}
             className="transition ease-in-out w-9 h-9 ml-1 hover:scale:110 active:scale-90 items-start"
           >
             <PlusCircleIcon stroke="red" />
@@ -53,8 +43,8 @@ export const Home = () => {
         <div className="themesCont">
           <div className="themeTitle grid grid-rows-1 text-md text-center my-5 bg-slate-50">
             <div className="title font-semibold text-slate-800">
-              <span className="text-red-500 text-2xl">N</span>o tienes temas
-              creados aún
+              <span className="text-red-500 text-2xl">N</span>o tienes{" "}
+              <span className="text-red-500 text-2xl">T</span>emas creados aún
             </div>
           </div>
         </div>

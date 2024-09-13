@@ -1,5 +1,5 @@
 import cfg from "../config/config.json";
-
+import { setCookie } from "./cookies";
 export const logIn = async (username: string, password: string) => {
   const reqLogin = await fetch(cfg.domain + "/api/login", {
     method: "POST",
@@ -41,4 +41,10 @@ export const getInfo = async (token: string) => {
     throw reqInfo.status;
   }
   return reqInfo;
+};
+
+export const logOut = () => {
+  setCookie("ssTok", "", 0);
+  console.log("Logged out");
+  return (window.location.pathname = "/login");
 };
