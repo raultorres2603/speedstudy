@@ -9,7 +9,7 @@ import {
 import { Login } from "./components/Login";
 import { Home } from "./components/Home";
 import { getCookie, setCookie } from "./functions/cookies";
-import { logIn, register } from "./functions/user";
+import { logIn, register, getInfo } from "./functions/user";
 import { Register } from "./components/Register";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -28,12 +28,14 @@ const router = createBrowserRouter([
   {
     path: "/home",
     element: <Home />,
-    loader: () => {
+    loader: async () => {
       const token = getCookie("ssTok");
       if (!token) {
         throw redirect("/login");
       }
-      return null;
+      setCookie("ssTok", token, 1);
+      const userInfo = await getInfo(token);
+      return await userInfo.json();
     },
     action: async ({ request }) => {
       const loadingToast = toast.loading("Entrando...");

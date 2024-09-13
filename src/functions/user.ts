@@ -28,3 +28,17 @@ export const register = async (username: string, password: string) => {
   }
   return reqRegister;
 };
+
+export const getInfo = async (token: string) => {
+  const reqInfo = await fetch(cfg.domain + "/api/user/info", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    },
+  });
+  if (!reqInfo.ok) {
+    throw reqInfo.status;
+  }
+  return reqInfo;
+};

@@ -28,6 +28,7 @@ router.post("/login", async function (req, res, next) {
         .findOne({ username: username });
       if (result) {
         if (bcrypt.compareSync(password, result.password)) {
+          delete result.password;
           const token = await new jose.SignJWT({
             user: result,
           })
