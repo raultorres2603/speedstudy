@@ -1,6 +1,6 @@
 import { SubTheme } from "../components/NewTheme";
 import cfg from "../config/config.json";
-import { getCookie } from "./cookies";
+import { getCookie, setCookie } from "./cookies";
 
 interface Theme {
   name: string;
@@ -20,5 +20,21 @@ export const createTheme = async (newTheme: Theme) => {
   if (!req.ok) {
     throw req.status;
   }
-  return await req.json();
+  const refreshToken = await fetch(cfg.domain + "/api/user/refresh", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + getCookie("ssTok"),
+    },
+  });
+
+  if (!refreshToken.ok) {
+    throw refreshToken.status;
+  }
+
+  const { token } = await refreshToken.json();
+
+  setCookie("ssTok", token, 1);
+
+  return true;
 };

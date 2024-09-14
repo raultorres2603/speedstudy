@@ -25,12 +25,23 @@ router.post("/login", async function (req, res, next) {
       const result = await client
         .db("sscards")
         .collection("users")
-        .findOne({ username: username });
-      if (result) {
-        if (bcrypt.compareSync(password, result.password)) {
-          delete result.password;
+        .aggregate([
+          { $match: { username: username } },
+          {
+            $lookup: {
+              from: "themes",
+              localField: "_id",
+              foreignField: "creator",
+              as: "themes",
+            },
+          },
+        ])
+        .toArray();
+      if (result[0]) {
+        if (bcrypt.compareSync(password, result[0].password)) {
+          delete result[0].password;
           const token = await new jose.SignJWT({
-            user: result,
+            user: result[0],
           })
             .setProtectedHeader({ alg: "HS256" })
             .setExpirationTime("1h")
