@@ -1,4 +1,4 @@
-import { Form, redirect } from "react-router-dom";
+import { Form } from "react-router-dom";
 import { useState } from "react";
 import { PlusCircleIcon, MinusCircleIcon } from "@heroicons/react/24/solid";
 import toast from "react-hot-toast";
@@ -38,9 +38,7 @@ export const NewTheme = () => {
     try {
       await createTheme(newTheme);
       toast.success("Tema creado", { id: loadingToast });
-      setTimeout(() => {
-        return redirect("/home");
-      }, 1000);
+      return (window.location.pathname = "/home");
     } catch (error) {
       console.log(error);
       toast.error(`Error al crear el tema (${error})`, { id: loadingToast });
