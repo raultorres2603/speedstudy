@@ -44,6 +44,8 @@ router.post("/login", async function (req, res, next) {
       }
     } catch (error) {
       res.status(501).send("Error on finding");
+    } finally {
+      await client.close();
     }
   } catch (error) {
     res.status(500).send("Error on connecting");
@@ -75,6 +77,8 @@ router.post("/register", async function (req, res, next) {
           res.status(200).send(result);
         } catch (error) {
           res.status(501).send("Error on inserting");
+        } finally {
+          await client.close();
         }
       }
     } catch (error) {

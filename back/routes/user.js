@@ -16,8 +16,8 @@ router.get("/info", async function (req, res, next) {
 });
 
 router.use(function (req, res, next) {
-  const token = req.headers.authorization?.split(" ")[1];
-  if (!token) {
+  const token = req.headers.authorization?.split(" ")[0];
+  if (token !== "Bearer") {
     res.status(401).json({ error: "No token provided" });
   } else {
     next();

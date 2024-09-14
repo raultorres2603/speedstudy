@@ -28,6 +28,31 @@ const router = createBrowserRouter([
     },
   },
   {
+    path: "/register",
+    element: <Register />,
+    loader: () => {
+      const token = getCookie("ssTok");
+      if (token) {
+        throw redirect("/home");
+      }
+      return null;
+    },
+    action: async ({ request }) => {
+      const loadingToast = toast.loading("Registrando...");
+      const formData = await request.formData();
+      const username = formData.get("username");
+      const password = formData.get("password");
+      try {
+        await register(username as string, password as string);
+        return redirect("/login?success=200");
+      } catch (error) {
+        throw redirect("/register?error=" + error);
+      } finally {
+        toast.dismiss(loadingToast);
+      }
+    },
+  },
+  {
     path: "/home",
     element: (
       <Layout title="Inicio">
@@ -72,31 +97,7 @@ const router = createBrowserRouter([
       }
     },
   },
-  {
-    path: "/register",
-    element: <Register />,
-    loader: () => {
-      const token = getCookie("ssTok");
-      if (token) {
-        throw redirect("/home");
-      }
-      return null;
-    },
-    action: async ({ request }) => {
-      const loadingToast = toast.loading("Registrando...");
-      const formData = await request.formData();
-      const username = formData.get("username");
-      const password = formData.get("password");
-      try {
-        await register(username as string, password as string);
-        return redirect("/login?success=200");
-      } catch (error) {
-        throw redirect("/register?error=" + error);
-      } finally {
-        toast.dismiss(loadingToast);
-      }
-    },
-  },
+  // THEMES ROUTES
   {
     path: "/theme",
     children: [
