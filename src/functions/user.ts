@@ -45,6 +45,5 @@ export const getInfo = async (token: string) => {
 
 export const logOut = () => {
   setCookie("ssTok", "", 0);
-  console.log("Logged out");
   return (window.location.pathname = "/login");
 };

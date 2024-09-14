@@ -1,8 +1,10 @@
-import { Form } from "react-router-dom";
+import { Form, redirect } from "react-router-dom";
 import { useState } from "react";
 import { PlusCircleIcon, MinusCircleIcon } from "@heroicons/react/24/solid";
+import toast from "react-hot-toast";
+import { createTheme } from "../functions/themes";
 
-interface SubTheme {
+export interface SubTheme {
   name: string;
   carts: object[];
 }
@@ -12,15 +14,42 @@ export const NewTheme = () => {
 
   const eliminarElemento = (index: number) => {
     // Usamos filter para crear un nuevo array sin el elemento en el índice especificado
-    const newSubThemes = subThemes.filter((_, i) => i !== index);
-    console.log(newSubThemes);
-    setSubThemes(newSubThemes);
-    console.log(newSubThemes);
+    if (
+      confirm(`¿Seguro que quieres eliminar el tema ${subThemes[index].name}?`)
+    ) {
+      const newSubThemes = subThemes.filter((_, i) => i !== index);
+      setSubThemes(newSubThemes);
+      toast.error("Tema eliminado");
+    }
+  };
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const nameTheme = formData.get("nameTheme");
+    const imgTheme = formData.get("imgTheme");
+    const newTheme = {
+      name: nameTheme as string,
+      img: imgTheme as string,
+      subThemes: subThemes,
+      carts: [],
+    };
+    const loadingToast = toast.loading("Enviando tema a la BD...");
+    try {
+      await createTheme(newTheme);
+      toast.success("Tema creado", { id: loadingToast });
+      setTimeout(() => {
+        return redirect("/home");
+      }, 1000);
+    } catch (error) {
+      console.log(error);
+      toast.error(`Error al crear el tema (${error})`, { id: loadingToast });
+    }
   };
 
   return (
     <div className="createTheme mx-3">
-      <Form method="post" action="/api/theme/new">
+      <Form onSubmit={handleSubmit}>
         <div className="grid grid-cols-2 gap-4">
           <div className="inputGroup">
             <label htmlFor="name" className="font-semibold text-xl">
@@ -69,47 +98,54 @@ export const NewTheme = () => {
           </div>
         </div>
         <div className="grid grid-rows-1">
-          <div className="contSubThemes h-60 overflow-y-auto border-2 rounded-lg border-slate-100">
-            <div className="listSubThemes grid grid-rows-auto gap-4 items-center m-4">
-              {subThemes.map((subTheme, index) => (
-                <div className="subTheme grid grid-rows-1" key={index}>
-                  <div className="inputGroup grid grid-cols-4 gap-4">
-                    <div className="nameSubTheme col-span-3">
-                      {subTheme.name.trim() !== "" ? (
-                        <div className="nameConfirmed bg-sky-500 rounded-lg text-center text-md font-semibold">
-                          {subTheme.name}
-                        </div>
-                      ) : (
-                        <input
-                          type="text"
-                          name="subTheme"
-                          className="text-md font-semibold rounded-lg w-full bg-slate-100 text-slate-800 text-center"
-                          placeholder="Titulo (Enter para confirmar)"
-                          onKeyDownCapture={(e) => {
-                            if (
-                              e.key === "Enter" &&
-                              e.currentTarget.value.trim() !== ""
-                            ) {
-                              subTheme.name = e.currentTarget.value;
-                              setSubThemes([...subThemes]);
-                              console.log(subThemes);
-                            }
-                          }}
-                        />
-                      )}
-                    </div>
-                    {subTheme.name.trim() !== "" && (
-                      <MinusCircleIcon
-                        className="w-8 h-auto text-red-500"
-                        onClick={() => {
-                          eliminarElemento(index);
+          <div className="listSubThemes grid grid-rows-auto gap-4 items-center m-4">
+            {subThemes.map((subTheme, index) => (
+              <div className="subTheme grid grid-rows-1" key={index}>
+                <div className="inputGroup grid grid-cols-4 gap-4">
+                  <div className="nameSubTheme col-span-3">
+                    {subTheme.name.trim() !== "" ? (
+                      <div className="nameConfirmed bg-sky-500 rounded-lg text-center text-md font-semibold">
+                        {subTheme.name}
+                      </div>
+                    ) : (
+                      <input
+                        type="text"
+                        name="subTheme"
+                        className="text-md font-semibold rounded-lg w-full bg-slate-100 text-slate-800 text-center"
+                        placeholder="Titulo (Enter para confirmar)"
+                        onKeyDownCapture={(e) => {
+                          if (
+                            e.key === "Enter" &&
+                            e.currentTarget.value.trim() !== ""
+                          ) {
+                            subTheme.name = e.currentTarget.value;
+                            setSubThemes([...subThemes]);
+                            toast.success("Tema guardado");
+                          }
                         }}
                       />
                     )}
                   </div>
+                  {subTheme.name.trim() !== "" && (
+                    <MinusCircleIcon
+                      className="w-8 h-auto text-red-500"
+                      onClick={() => {
+                        eliminarElemento(index);
+                      }}
+                    />
+                  )}
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
+          </div>
+          <hr className="my-5" />
+          <div className="grid grid-rows-1 createButton">
+            <button
+              type="submit"
+              className="transition ease-in-out hover:scale-105 active:scale-90 hover:bg-red-600 items-start bg-red-500"
+            >
+              Crear
+            </button>
           </div>
         </div>
       </Form>

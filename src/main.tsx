@@ -64,7 +64,6 @@ const router = createBrowserRouter([
       if (!token) {
         throw redirect("/login");
       }
-      setCookie("ssTok", token, 1);
       try {
         const userInfo = await getInfo(token);
         return await userInfo.json();
@@ -87,7 +86,6 @@ const router = createBrowserRouter([
       try {
         const logReq = await logIn(username as string, password as string);
         const token = (await logReq.json()).token;
-        console.log(token);
         setCookie("ssTok", token, 1);
         return redirect("/home");
       } catch (error) {
