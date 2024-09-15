@@ -21,17 +21,6 @@ export const Home = () => {
   const [searchParams] = useSearchParams();
 
   useEffect(() => {
-    if (searchParams.get("success") === "200") {
-      switch (searchParams.get("action")) {
-        case "remove":
-          toast.success("Tema eliminado");
-          break;
-
-        default:
-          break;
-      }
-    }
-
     if (searchParams.get("error")) {
       switch (searchParams.get("error")) {
         case "404":

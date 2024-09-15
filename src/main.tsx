@@ -125,6 +125,7 @@ const router = createBrowserRouter([
           const loadingToast = toast.loading("Eliminando...");
           try {
             await deleteTheme(params.themeId as string);
+            toast.success("Tema eliminado", { id: loadingToast });
             return redirect("/home?success=200&action=remove");
           } catch (error) {
             toast.error(`Error al eliminar el tema (${error})`, {
