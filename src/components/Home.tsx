@@ -7,11 +7,12 @@ import {
 } from "@heroicons/react/24/solid";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
+import { SubTheme } from "./NewTheme";
 
 interface User {
   username: string;
   _id: string;
-  themes?: { name: string; _id: string }[];
+  themes?: { name: string; _id: string; img: string; subThemes: SubTheme[] }[];
 }
 
 export const Home = () => {
@@ -87,12 +88,21 @@ export const Home = () => {
                   >
                     <PencilSquareIcon className="transition ease-in-out w-8 h-8 hover:scale:110 active:scale-90 text-sky-500" />
                   </Link>
-                  <Link
-                    to={`/theme/play/${theme._id}`}
-                    className="transition ease-in-out"
-                  >
-                    <PlayCircleIcon className="transition ease-in-out w-8 h-8 hover:scale:110 active:scale-90 text-green-500" />
-                  </Link>
+                  {theme.subThemes[0].carts.length > 0 ? (
+                    <Link
+                      to={`/theme/play/${theme._id}`}
+                      className="transition ease-in-out"
+                    >
+                      <PlayCircleIcon
+                        className={`transition ease-in-out w-8 h-8 hover:scale:110 active:scale-90 text-green-500`}
+                      />
+                    </Link>
+                  ) : (
+                    <PlayCircleIcon
+                      className={`transition ease-in-out w-8 h-8 hover:scale:110 active:scale-90 text-zinc-500`}
+                    />
+                  )}
+
                   <Link
                     to={`/theme/remove/${theme._id}`}
                     className="transition ease-in-out"
