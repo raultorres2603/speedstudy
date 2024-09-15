@@ -76,28 +76,30 @@ export const Home = () => {
               className="transition ease-in-out themesCont bg-slate-50 rounded-lg flex relative overflow-hidden"
               key={theme._id}
             >
-              <div className="nameTheme text-lg font-semibold text-slate-800 m-1">
-                {theme.name}
-              </div>
-              <div className="grid grid-cols-3 absolute right-0 top-0 gap-1">
-                <Link
-                  to={`/theme/edit/${theme._id}`}
-                  className="transition ease-in-out"
-                >
-                  <PencilSquareIcon className="transition ease-in-out w-8 h-8 hover:scale:110 active:scale-90 text-sky-500" />
-                </Link>
-                <Link
-                  to={`/theme/play/${theme._id}`}
-                  className="transition ease-in-out"
-                >
-                  <PlayCircleIcon className="transition ease-in-out w-8 h-8 hover:scale:110 active:scale-90 text-green-500" />
-                </Link>
-                <Link
-                  to={`/theme/remove/${theme._id}`}
-                  className="transition ease-in-out"
-                >
-                  <TrashIcon className="transition ease-in-out w-8 h-8 hover:scale:110 active:scale-90 text-red-500" />
-                </Link>
+              <div className="grid grid-cols-3">
+                <div className="nameTheme text-lg font-semibold text-slate-800 m-1 overflow-scroll col-span-2">
+                  {theme.name}
+                </div>
+                <div className="grid grid-cols-3 absolute right-0 top-0 gap-1">
+                  <Link
+                    to={`/theme/edit/${theme._id}`}
+                    className="transition ease-in-out"
+                  >
+                    <PencilSquareIcon className="transition ease-in-out w-8 h-8 hover:scale:110 active:scale-90 text-sky-500" />
+                  </Link>
+                  <Link
+                    to={`/theme/play/${theme._id}`}
+                    className="transition ease-in-out"
+                  >
+                    <PlayCircleIcon className="transition ease-in-out w-8 h-8 hover:scale:110 active:scale-90 text-green-500" />
+                  </Link>
+                  <Link
+                    to={`/theme/remove/${theme._id}`}
+                    className="transition ease-in-out"
+                  >
+                    <TrashIcon className="transition ease-in-out w-8 h-8 hover:scale:110 active:scale-90 text-red-500" />
+                  </Link>
+                </div>
               </div>
             </div>
           ))}
