@@ -1,5 +1,12 @@
-import { useLoaderData, Link } from "react-router-dom";
+import { useLoaderData, Link, useSearchParams } from "react-router-dom";
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
+import {
+  PlayCircleIcon,
+  PencilSquareIcon,
+  TrashIcon,
+} from "@heroicons/react/24/solid";
+import { useEffect } from "react";
+import toast from "react-hot-toast";
 
 interface User {
   username: string;
@@ -9,6 +16,39 @@ interface User {
 
 export const Home = () => {
   const data = useLoaderData() as { user: User };
+
+  const [searchParams] = useSearchParams();
+
+  useEffect(() => {
+    if (searchParams.get("success") === "200") {
+      switch (searchParams.get("action")) {
+        case "remove":
+          toast.success("Tema eliminado");
+          break;
+
+        default:
+          break;
+      }
+    }
+    if (searchParams.get("error")) {
+      switch (searchParams.get("error")) {
+        case "404":
+          toast.error("Error al borrar el tema");
+          break;
+
+        case "500":
+          toast.error("Error de sevidor.");
+          break;
+
+        case "401":
+          toast.error("No autorizado.");
+          break;
+
+        default:
+          break;
+      }
+    }
+  }, [searchParams]);
 
   return (
     <div className="home">
@@ -29,16 +69,38 @@ export const Home = () => {
         (Consulta tus temas creados)
       </div>
       {data.user.themes ? (
-        data.user.themes.map((theme) => (
-          <div className="themesCont" key={theme._id}>
-            <Link
-              to={`/theme/${theme._id}`}
-              className="themeTitle text-xl font-semibold mx-5"
+        <div className="grid grid-rows-1 gap-2 mt-5 mx-5">
+          {data.user.themes.map((theme) => (
+            <div
+              className="transition ease-in-out themesCont bg-slate-50 rounded-lg flex relative overflow-hidden"
+              key={theme._id}
             >
-              {theme.name}
-            </Link>
-          </div>
-        ))
+              <div className="nameTheme text-lg font-semibold text-slate-800 m-1">
+                {theme.name}
+              </div>
+              <div className="grid grid-cols-3 absolute right-0 top-0 gap-1">
+                <Link
+                  to={`/theme/edit/${theme._id}`}
+                  className="transition ease-in-out"
+                >
+                  <PencilSquareIcon className="transition ease-in-out w-8 h-8 hover:scale:110 active:scale-90 text-sky-500" />
+                </Link>
+                <Link
+                  to={`/theme/play/${theme._id}`}
+                  className="transition ease-in-out"
+                >
+                  <PlayCircleIcon className="transition ease-in-out w-8 h-8 hover:scale:110 active:scale-90 text-green-500" />
+                </Link>
+                <Link
+                  to={`/theme/remove/${theme._id}`}
+                  className="transition ease-in-out"
+                >
+                  <TrashIcon className="transition ease-in-out w-8 h-8 hover:scale:110 active:scale-90 text-red-500" />
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
       ) : (
         <div className="themesCont">
           <div className="themeTitle grid grid-rows-1 text-md text-center my-5 bg-slate-50">
@@ -49,7 +111,7 @@ export const Home = () => {
           </div>
         </div>
       )}
-      <hr />
+      <hr className="my-5" />
     </div>
   );
 };

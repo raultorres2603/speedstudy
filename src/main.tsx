@@ -14,6 +14,7 @@ import { logIn, register, getInfo } from "./functions/user";
 import { Register } from "./components/Register";
 import toast, { Toaster } from "react-hot-toast";
 import { Layout } from "./components/Layout";
+import { deleteTheme } from "./functions/themes";
 
 const router = createBrowserRouter([
   {
@@ -113,6 +114,26 @@ const router = createBrowserRouter([
             <NewTheme />
           </Layout>
         ),
+      },
+      {
+        path: "remove/:themeId",
+        loader: async ({ params }) => {
+          const token = getCookie("ssTok");
+          if (!token) {
+            throw redirect("/login");
+          }
+          const loadingToast = toast.loading("Eliminando...");
+          try {
+            await deleteTheme(params.themeId as string);
+            toast.success("Tema eliminado", { id: loadingToast });
+            return redirect("/home?success=200&action=remove");
+          } catch (error) {
+            toast.error(`Error al eliminar el tema (${error})`, {
+              id: loadingToast,
+            });
+            throw redirect("/home?error=" + error + "&action=remove");
+          }
+        },
       },
     ],
   },

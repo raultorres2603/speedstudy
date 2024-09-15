@@ -43,6 +43,32 @@ router.post("/new", async function (req, res, next) {
   }
 });
 
+router.delete("/remove/:themeId", async function (req, res, next) {
+  const token = req.headers.authorization.split(" ")[1];
+  try {
+    const { payload } = await jose.jwtVerify(
+      token,
+      new TextEncoder().encode(process.env.SKT)
+    );
+    try {
+      await client.connect();
+      try {
+        await client
+          .db("sscards")
+          .collection("themes")
+          .deleteOne({ _id: new ObjectId(req.params.themeId) });
+        res.status(200).json({ success: "Theme deleted" });
+      } catch (error) {
+        res.status(404).json({ error: error });
+      }
+    } catch (error) {
+      res.status(500).json({ error: error });
+    }
+  } catch (error) {
+    res.status(401).json({ error: error });
+  }
+});
+
 router.use(function (req, res, next) {
   const token = req.headers.authorization?.split(" ")[0];
   if (token !== "Bearer") {

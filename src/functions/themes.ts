@@ -38,3 +38,29 @@ export const createTheme = async (newTheme: Theme) => {
 
   return true;
 };
+
+export const deleteTheme = async (themeId: string) => {
+  const req = await fetch(cfg.domain + "/api/themes/remove/" + themeId, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + getCookie("ssTok"),
+    },
+  });
+  if (!req.ok) {
+    throw req.status;
+  }
+  const refreshToken = await fetch(cfg.domain + "/api/user/refresh", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + getCookie("ssTok"),
+    },
+  });
+  if (!refreshToken.ok) {
+    throw refreshToken.status;
+  }
+  const { token } = await refreshToken.json();
+  setCookie("ssTok", token, 1);
+  return true;
+};
