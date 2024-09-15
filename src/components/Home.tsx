@@ -30,6 +30,7 @@ export const Home = () => {
           break;
       }
     }
+
     if (searchParams.get("error")) {
       switch (searchParams.get("error")) {
         case "404":

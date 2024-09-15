@@ -69,11 +69,44 @@ router.delete("/remove/:themeId", async function (req, res, next) {
   }
 });
 
-router.use(function (req, res, next) {
+router.use(async function (req, res, next) {
   const token = req.headers.authorization?.split(" ")[0];
   if (token !== "Bearer") {
     res.status(401).json({ error: "No token provided" });
   } else {
+    const tokenUser = req.headers.authorization.split(" ")[1];
+    try {
+      const { payload } = jose.jwtVerify(
+        tokenUser,
+        new TextEncoder().encode(process.env.SKT)
+      );
+      if (!payload.user) {
+        res.status(401).json({ error: "No token provided" });
+      }
+      const { user } = payload;
+      //comprobar si el usuario existe en la BD
+      try {
+        await client.connect();
+        try {
+          const result = await client
+            .db("sscards")
+            .collection("users")
+            .findOne({
+              _id: new ObjectId(user._id),
+            });
+          if (result) {
+            next();
+          } else {
+            res.status(404).json({ error: "User not found" });
+          }
+        } catch (error) {
+          res.status(500).json({ error: error });
+        }
+      } catch (error) {}
+      next();
+    } catch (error) {
+      res.status(401).json({ error: error });
+    }
     next();
   }
 });
