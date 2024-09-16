@@ -64,3 +64,17 @@ export const deleteTheme = async (themeId: string) => {
   setCookie("ssTok", token, 1);
   return true;
 };
+
+export const getTheme = async (themeId: string) => {
+  const req = await fetch(cfg.domain + "/api/themes/edit/" + themeId, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + getCookie("ssTok"),
+    },
+  });
+  if (!req.ok) {
+    throw req.status;
+  }
+  return await req.json();
+};

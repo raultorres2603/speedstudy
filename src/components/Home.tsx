@@ -24,7 +24,11 @@ export const Home = () => {
     if (searchParams.get("error")) {
       switch (searchParams.get("error")) {
         case "404":
-          toast.error("Error al borrar el tema");
+          if (searchParams.get("action") === "edit") {
+            toast.error("El tema no existe o no se puede editar.");
+          } else {
+            toast.error("Error al borrar el tema");
+          }
           break;
 
         case "500":

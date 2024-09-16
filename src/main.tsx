@@ -14,7 +14,8 @@ import { logIn, register, getInfo } from "./functions/user";
 import { Register } from "./components/Register";
 import toast, { Toaster } from "react-hot-toast";
 import { Layout } from "./components/Layout";
-import { deleteTheme } from "./functions/themes";
+import { deleteTheme, getTheme } from "./functions/themes";
+import { EditTheme } from "./components/EditTheme";
 
 const router = createBrowserRouter([
   {
@@ -138,14 +139,30 @@ const router = createBrowserRouter([
       },
       {
         path: "edit/:themeId",
-        loader: () => {
+        loader: async ({ params }) => {
           const token = getCookie("ssTok");
           if (!token) {
             throw redirect("/login");
           }
-          return null;
+          try {
+            console.log(params);
+            const theme = await getTheme(params.themeId as string);
+            console.log(theme);
+            return theme;
+          } catch (error) {
+            throw redirect("/home?error=" + error + "&action=edit");
+          }
         },
-        errorElement: <Home />,
+        element: (
+          <Layout title="Editar tema" goBack="/home">
+            <EditTheme />
+          </Layout>
+        ),
+        errorElement: (
+          <Layout title="Inicio">
+            <Home />
+          </Layout>
+        ),
       },
     ],
   },
