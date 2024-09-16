@@ -2,10 +2,11 @@ import { SubTheme } from "../components/NewTheme";
 import cfg from "../config/config.json";
 import { getCookie, setCookie } from "./cookies";
 
-interface Theme {
+export interface Theme {
   name: string;
   img: string;
   subThemes: SubTheme[];
+  creator?: string;
 }
 
 export const createTheme = async (newTheme: Theme) => {

@@ -144,12 +144,16 @@ const router = createBrowserRouter([
           if (!token) {
             throw redirect("/login");
           }
+          const loadingToast = toast.loading("Cargando...");
           try {
             console.log(params);
             const theme = await getTheme(params.themeId as string);
-            console.log(theme);
+            toast.success("Tema cargado", { id: loadingToast });
             return theme;
           } catch (error) {
+            toast.error(`Error al cargar el tema (${error})`, {
+              id: loadingToast,
+            });
             throw redirect("/home?error=" + error + "&action=edit");
           }
         },
