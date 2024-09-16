@@ -95,6 +95,7 @@ const router = createBrowserRouter([
         toast.dismiss(loadingToast);
       }
     },
+    errorElement: <Login />,
   },
   // THEMES ROUTES
   {
@@ -134,6 +135,17 @@ const router = createBrowserRouter([
             throw redirect("/home?error=" + error + "&action=remove");
           }
         },
+      },
+      {
+        path: "edit/:themeId",
+        loader: () => {
+          const token = getCookie("ssTok");
+          if (!token) {
+            throw redirect("/login");
+          }
+          return null;
+        },
+        errorElement: <Home />,
       },
     ],
   },

@@ -28,7 +28,7 @@ export const Home = () => {
           break;
 
         case "500":
-          toast.error("Error de sevidor.");
+          toast.error("Error de servidor.");
           break;
 
         case "401":
