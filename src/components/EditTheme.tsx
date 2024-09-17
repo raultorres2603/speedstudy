@@ -101,7 +101,7 @@ export const EditTheme = () => {
                       type="text"
                       name="question"
                       id="question"
-                      className="rounded-lg bg-slate-200 text-zinc-900 text-center col-span-4"
+                      className="rounded-lg bg-slate-200 text-zinc-900 text-center col-span-4 border-2 border-black"
                       placeholder="Pregunta"
                       value={cart.question !== "Pregunta" ? cart.question : ""}
                       onChange={(e) => {
@@ -114,7 +114,7 @@ export const EditTheme = () => {
                       type="text"
                       name="answer"
                       id="answer"
-                      className="rounded-lg bg-slate-200 text-zinc-900 text-center col-span-3"
+                      className="rounded-lg bg-slate-200 text-zinc-900 text-center col-span-3 border-2 border-black"
                       placeholder="Respuesta"
                       value={cart.answer !== "Respuesta" ? cart.answer : ""}
                       onChange={(e) => {
