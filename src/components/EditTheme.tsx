@@ -148,7 +148,6 @@ export const EditTheme = () => {
                       onChange={(e) => {
                         cart.question = e.currentTarget.value;
                         setSubThemes([...subThemes]);
-                        console.log(cart.question);
                       }}
                     />
                     <input
@@ -161,7 +160,6 @@ export const EditTheme = () => {
                       onChange={(e) => {
                         cart.answer = e.currentTarget.value;
                         setSubThemes([...subThemes]);
-                        console.log(cart.answer);
                       }}
                     />
                     <MinusCircleIcon
@@ -172,7 +170,6 @@ export const EditTheme = () => {
                         );
                         subTheme.carts = newSub;
                         setSubThemes([...subThemes]);
-                        console.log(subTheme.carts);
                       }}
                     />
                   </div>

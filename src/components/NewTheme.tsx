@@ -43,7 +43,6 @@ export const NewTheme = () => {
       toast.success("Tema creado", { id: loadingToast });
       return (window.location.pathname = "/home");
     } catch (error) {
-      console.log(error);
       toast.error(`Error al crear el tema (${error})`, { id: loadingToast });
     }
   };
