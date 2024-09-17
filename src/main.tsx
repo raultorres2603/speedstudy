@@ -164,7 +164,6 @@ const router = createBrowserRouter([
           }
           const loadingToast = toast.loading("Cargando...");
           try {
-            console.log(params);
             const theme = await getTheme(params.themeId as string);
             toast.success("Tema cargado", { id: loadingToast });
             return theme;
