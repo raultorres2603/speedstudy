@@ -20,6 +20,16 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const router = createBrowserRouter([
   {
+    path: "/",
+    loader: () => {
+      const token = getCookie("ssTok");
+      if (token) {
+        throw redirect("/home");
+      }
+      return redirect("/login");
+    },
+  },
+  {
     path: "/login",
     element: <Login />,
     loader: () => {
