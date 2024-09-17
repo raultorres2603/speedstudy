@@ -1,5 +1,5 @@
 import { useLoaderData } from "react-router-dom";
-import { Theme } from "../functions/themes";
+import { Theme, updateTheme } from "../functions/themes";
 import { useState } from "react";
 import { PlusCircleIcon, MinusCircleIcon } from "@heroicons/react/24/solid";
 import { SubTheme } from "./NewTheme";
@@ -8,6 +8,47 @@ import toast from "react-hot-toast";
 export const EditTheme = () => {
   const { theme } = useLoaderData() as { theme: Theme };
   const [subThemes, setSubThemes] = useState<Array<SubTheme>>(theme.subThemes);
+
+  const updateThemeF = async () => {
+    const loadingToast = toast.loading("Actualizando tema...");
+
+    for (let i = 0; i < theme.subThemes.length; i++) {
+      const subTheme = theme.subThemes[i];
+      for (let j = 0; j < subTheme.carts.length; j++) {
+        const cart = subTheme.carts[j];
+        if (cart.question === "Pregunta" || cart.answer === "Respuesta") {
+          toast.error(
+            "Hay una unidad sin pregunta o respuesta en " + subTheme.name,
+            {
+              id: loadingToast,
+            }
+          );
+          throw "404";
+        }
+      }
+    }
+
+    try {
+      await updateTheme(theme._id as string, theme);
+      toast.success("Tema actualizado", { id: loadingToast });
+      return (window.location.pathname = "/home");
+    } catch (error) {
+      switch (error) {
+        case "404":
+          toast.error("Error al actualizar el tema " + theme.name);
+          break;
+        case "500":
+          toast.error("Error de servidor");
+          break;
+        case "401":
+          toast.error("No autorizado");
+          break;
+        default:
+          break;
+      }
+    }
+  };
+
   return (
     <div className="theme mx-5">
       <div className="grid grid-rows-1 text-center text-3xl font-semibold">
@@ -146,6 +187,11 @@ export const EditTheme = () => {
         <button
           type="button"
           className="transition ease-in-out hover:scale-105 active:scale-90 bg-red-500 rounded-lg text-slate-100 p-2 w-full hover:bg-red-600"
+          onClick={() => {
+            if (subThemes.length == 0)
+              return toast.error("Debes agregar un tema");
+            updateThemeF();
+          }}
         >
           Guardar
         </button>
