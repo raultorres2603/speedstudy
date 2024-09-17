@@ -65,7 +65,6 @@ export const NewTheme = () => {
               name="nameTheme"
               placeholder="Introdúcelo aqui"
               className="text-md bg-transparent rounded-lg"
-              required
             />
           </div>
           <div className="inputGroup">
