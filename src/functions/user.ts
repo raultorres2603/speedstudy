@@ -1,5 +1,7 @@
 import cfg from "../config/config.json";
 import { setCookie } from "./cookies";
+import { googleLogout } from "@react-oauth/google";
+
 export const logIn = async (username: string, password: string) => {
   const reqLogin = await fetch(cfg.domain + "/api/login", {
     method: "POST",
@@ -12,6 +14,33 @@ export const logIn = async (username: string, password: string) => {
   if (!reqLogin.ok) {
     throw reqLogin.status;
   }
+  return reqLogin;
+};
+
+export const logInWithGoogle = async (token: string) => {
+  const res = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!res.ok) {
+    throw res.status;
+  }
+
+  const data = await res.json();
+  const reqLogin = await fetch(cfg.domain + "/api/loginWithGoogle", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email: data.email }),
+  });
+
+  if (!reqLogin.ok) {
+    throw reqLogin.status;
+  }
+  setCookie("ssTok", (await reqLogin.json()).token, 1);
   return reqLogin;
 };
 
@@ -45,5 +74,6 @@ export const getInfo = async (token: string) => {
 
 export const logOut = () => {
   setCookie("ssTok", "", 0);
+  googleLogout();
   return (window.location.pathname = "/login");
 };

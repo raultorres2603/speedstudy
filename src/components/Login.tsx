@@ -1,9 +1,42 @@
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { Form, useSearchParams, Link } from "react-router-dom";
+import { useGoogleLogin } from "@react-oauth/google";
+import { logInWithGoogle } from "../functions/user";
 
 export const Login = () => {
   const [searchParams] = useSearchParams();
+
+  const login = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      try {
+        await logInWithGoogle(tokenResponse.access_token);
+        return (window.location.pathname = "/home");
+      } catch (error) {
+        switch (error) {
+          case "404":
+            toast.error("Error al iniciar sesión");
+            break;
+
+          case "401":
+            toast.error("Error al iniciar sesión");
+            break;
+
+          case "500":
+            toast.error("Error de servidor");
+            break;
+
+          case "501":
+            toast.error("Error de servidor");
+            break;
+
+          default:
+            break;
+        }
+      }
+    },
+    onError: (error) => toast.error(error.error_description as string),
+  });
 
   useEffect(() => {
     if (searchParams.get("error")) {
@@ -59,6 +92,15 @@ export const Login = () => {
               placeholder="Password"
               className="inputLogIn text-xl rounded-lg text-center"
             />
+          </div>
+          <div className="grid grid-rows-1 mt-5 mx-5">
+            <button
+              type="button"
+              className="bg-yellow-500 transition hover:bg-yellow-600 duration-200 hover:scale-110 ring-yellow-200 ring-1"
+              onClick={() => login()}
+            >
+              Entra con Google
+            </button>
           </div>
           <div className="grid grid-cols-2 gap-4 mx-10 my-5">
             <button

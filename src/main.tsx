@@ -16,6 +16,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { Layout } from "./components/Layout";
 import { deleteTheme, getTheme } from "./functions/themes";
 import { EditTheme } from "./components/EditTheme";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const router = createBrowserRouter([
   {
@@ -175,6 +176,8 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Toaster />
-    <RouterProvider router={router} />
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_SKG}>
+      <RouterProvider router={router} />
+    </GoogleOAuthProvider>
   </StrictMode>
 );
