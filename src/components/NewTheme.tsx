@@ -6,7 +6,12 @@ import { createTheme } from "../functions/themes";
 
 export interface SubTheme {
   name: string;
-  carts: object[];
+  carts: Cart[];
+}
+
+export interface Cart {
+  question: string;
+  answer: string;
 }
 
 export const NewTheme = () => {
