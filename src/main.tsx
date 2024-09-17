@@ -55,6 +55,9 @@ const router = createBrowserRouter([
       const formData = await request.formData();
       const username = formData.get("username");
       const password = formData.get("password");
+      if (!username || !password) {
+        throw toast.error("Rellena todos los datos", { id: loadingToast });
+      }
       try {
         await register(username as string, password as string);
         return redirect("/login?success=200");
@@ -64,6 +67,7 @@ const router = createBrowserRouter([
         toast.dismiss(loadingToast);
       }
     },
+    errorElement: <Register />,
   },
   {
     path: "/home",
@@ -96,6 +100,9 @@ const router = createBrowserRouter([
       const formData = await request.formData();
       const username = formData.get("username");
       const password = formData.get("password");
+      if (!username || !password) {
+        throw toast.error("Rellena todos los datos", { id: loadingToast });
+      }
       try {
         const logReq = await logIn(username as string, password as string);
         const token = (await logReq.json()).token;
