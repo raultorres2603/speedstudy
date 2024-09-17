@@ -9,8 +9,10 @@ export const Login = () => {
 
   const login = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
+      const loadingResponse = toast.loading("Iniciando sesión...");
       try {
         await logInWithGoogle(tokenResponse.access_token);
+        toast.success("Sesion iniciada");
         return (window.location.pathname = "/home");
       } catch (error) {
         switch (error) {
@@ -33,6 +35,8 @@ export const Login = () => {
           default:
             break;
         }
+      } finally {
+        toast.dismiss(loadingResponse);
       }
     },
     onError: (error) => toast.error(error.error_description as string),
@@ -93,15 +97,6 @@ export const Login = () => {
               className="inputLogIn text-xl rounded-lg text-center"
             />
           </div>
-          <div className="grid grid-rows-1 mt-5 mx-5">
-            <button
-              type="button"
-              className="bg-yellow-500 transition hover:bg-yellow-600 duration-200 hover:scale-110 ring-yellow-200 ring-1"
-              onClick={() => login()}
-            >
-              Entra con Google
-            </button>
-          </div>
           <div className="grid grid-cols-2 gap-4 mx-10 my-5">
             <button
               type="submit"
@@ -117,6 +112,15 @@ export const Login = () => {
                 Register
               </button>
             </Link>
+          </div>
+          <div className="grid grid-rows-1 mt-5 mx-10">
+            <button
+              type="button"
+              className="bg-yellow-500 transition hover:bg-yellow-600 duration-200 hover:scale-110 ring-yellow-200 ring-1"
+              onClick={() => login()}
+            >
+              Entra con Google
+            </button>
           </div>
         </Form>
       </div>
