@@ -4,7 +4,7 @@ import { getCookie, setCookie } from "./cookies";
 
 export interface Theme {
   name: string;
-  img: string;
+  img?: string;
   subThemes: SubTheme[];
   creator?: string;
 }

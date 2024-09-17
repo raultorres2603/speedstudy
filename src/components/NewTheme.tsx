@@ -12,6 +12,7 @@ export interface SubTheme {
 export interface Cart {
   question: string;
   answer: string;
+  img?: string;
 }
 
 export const NewTheme = () => {
@@ -64,6 +65,7 @@ export const NewTheme = () => {
               name="nameTheme"
               placeholder="Introdúcelo aqui"
               className="text-md bg-transparent rounded-lg"
+              required
             />
           </div>
           <div className="inputGroup">
