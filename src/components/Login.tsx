@@ -46,10 +46,10 @@ export const Login = () => {
         <Form method="post" action="/home">
           <div className="grid grid-cols-2 gap-4 mx-5">
             <input
-              type="text"
+              type="email"
               name="username"
               id="username"
-              placeholder="Username"
+              placeholder="Email"
               className="inputLogIn text-xl rounded-lg text-center"
             />
             <input
