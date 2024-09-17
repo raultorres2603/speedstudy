@@ -63,7 +63,7 @@ export const Home = () => {
       <div className="themesSubtitle text-xs font-light mx-10">
         (Consulta tus temas creados)
       </div>
-      {data.user.themes ? (
+      {data.user.themes && data.user.themes.length > 0 ? (
         <div className="grid grid-rows-1 gap-2 mt-5 mx-5">
           {data.user.themes.map((theme) => (
             <div
