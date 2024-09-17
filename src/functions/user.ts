@@ -14,6 +14,8 @@ export const logIn = async (username: string, password: string) => {
   if (!reqLogin.ok) {
     throw reqLogin.status;
   }
+
+  setCookie("ssTok", (await reqLogin.json()).token, 1);
   return reqLogin;
 };
 

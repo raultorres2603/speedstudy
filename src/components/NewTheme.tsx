@@ -59,7 +59,7 @@ export const NewTheme = () => {
             id="name"
             name="nameTheme"
             placeholder="Introdúcelo aqui"
-            className="text-md bg-transparent rounded-lg col-span-3"
+            className="text-md bg-slate-100 rounded-lg col-span-3 text-center border-2 border-black"
           />
         </div>
         <hr className="my-5" />
@@ -69,7 +69,7 @@ export const NewTheme = () => {
             nidades
           </div>
           <div
-            className="addButton ml-2"
+            className="addButton ml-2 items-center"
             onClick={() => {
               if (subThemes.length > 0) {
                 if (subThemes[subThemes.length - 1].name.trim() !== "") {
@@ -80,7 +80,7 @@ export const NewTheme = () => {
               }
             }}
           >
-            <PlusCircleIcon className="w-8 h-auto text-slate-100" />
+            <PlusCircleIcon className="w-8 h-auto text-slate-50" />
           </div>
         </div>
         <div className="grid grid-rows-1">
@@ -90,14 +90,14 @@ export const NewTheme = () => {
                 <div className="inputGroup grid grid-cols-4 gap-4">
                   <div className="nameSubTheme col-span-3">
                     {subTheme.name.trim() !== "" ? (
-                      <div className="nameConfirmed bg-sky-500 rounded-lg text-center text-md font-semibold">
+                      <div className="nameConfirmed bg-sky-500 rounded-lg text-center text-md font-semibold border-2 border-black">
                         {subTheme.name}
                       </div>
                     ) : (
                       <input
                         type="text"
                         name="subTheme"
-                        className="text-md font-semibold rounded-lg w-full bg-slate-100 text-slate-800 text-center"
+                        className="text-md font-semibold rounded-lg w-full bg-slate-100 text-slate-800 text-center border-2 border-black"
                         placeholder="Titulo (Enter para confirmar)"
                         onKeyDownCapture={(e) => {
                           if (

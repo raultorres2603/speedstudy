@@ -67,7 +67,7 @@ export const Home = () => {
         <div className="grid grid-rows-1 gap-2 mt-5 mx-5">
           {data.user.themes.map((theme) => (
             <div
-              className="transition ease-in-out themesCont bg-slate-50 rounded-lg flex relative overflow-hidden"
+              className="transition ease-in-out themesCont bg-slate-50 rounded-lg flex relative overflow-hidden border-4 border-zinc-900"
               key={theme._id}
             >
               <div className="grid grid-cols-3">
@@ -79,7 +79,10 @@ export const Home = () => {
                     to={`/theme/edit/${theme._id}`}
                     className="transition ease-in-out"
                   >
-                    <PencilSquareIcon className="transition ease-in-out w-8 h-8 hover:scale:110 active:scale-90 text-sky-500" />
+                    <PencilSquareIcon
+                      className="transition ease-in-out w-8 h-8 hover:scale:110 active:scale-90 text-sky-500"
+                      stroke="black"
+                    />
                   </Link>
                   {theme.subThemes[0].carts.length > 0 ? (
                     <Link
@@ -88,11 +91,13 @@ export const Home = () => {
                     >
                       <PlayCircleIcon
                         className={`transition ease-in-out w-8 h-8 hover:scale:110 active:scale-90 text-green-500`}
+                        stroke="black"
                       />
                     </Link>
                   ) : (
                     <PlayCircleIcon
                       className={`transition ease-in-out w-8 h-8 hover:scale:110 active:scale-90 text-zinc-500`}
+                      stroke="black"
                     />
                   )}
 
@@ -100,7 +105,10 @@ export const Home = () => {
                     to={`/theme/remove/${theme._id}`}
                     className="transition ease-in-out"
                   >
-                    <TrashIcon className="transition ease-in-out w-8 h-8 hover:scale:110 active:scale-90 text-red-500" />
+                    <TrashIcon
+                      className="transition ease-in-out w-8 h-8 hover:scale:110 active:scale-90 text-red-500"
+                      stroke="black"
+                    />
                   </Link>
                 </div>
               </div>

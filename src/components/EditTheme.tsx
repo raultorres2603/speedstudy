@@ -103,10 +103,14 @@ export const EditTheme = () => {
                       <MinusCircleIcon
                         className="w-7 h-auto text-slate-100 ml-1"
                         onClick={() => {
-                          const newSubThemes = subThemes.filter(
-                            (_, index) => index !== i
-                          );
-                          setSubThemes(newSubThemes);
+                          if (
+                            confirm("¿Seguro que quieres eliminar este tema?")
+                          ) {
+                            const newSubThemes = subThemes.filter(
+                              (_, index) => index !== i
+                            );
+                            setSubThemes(newSubThemes);
+                          }
                         }}
                       />
                       {subTheme.name}
