@@ -12,7 +12,6 @@ export interface SubTheme {
 export interface Cart {
   question: string;
   answer: string;
-  img?: string;
 }
 
 export const NewTheme = () => {
@@ -33,10 +32,8 @@ export const NewTheme = () => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const nameTheme = formData.get("nameTheme");
-    const imgTheme = formData.get("imgTheme");
     const newTheme = {
       name: nameTheme as string,
-      img: imgTheme as string,
       subThemes: subThemes,
       carts: [],
     };
@@ -54,31 +51,17 @@ export const NewTheme = () => {
   return (
     <div className="createTheme mx-3">
       <Form onSubmit={handleSubmit}>
-        <div className="grid grid-cols-2 gap-4">
-          <div className="inputGroup">
-            <label htmlFor="name" className="font-semibold text-xl">
-              <span className="text-red-500 text-2xl">N</span>ombre
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="nameTheme"
-              placeholder="Introdúcelo aqui"
-              className="text-md bg-transparent rounded-lg"
-            />
-          </div>
-          <div className="inputGroup">
-            <label htmlFor="imgTheme" className="font-semibold text-xl">
-              <span className="text-red-500 text-2xl">I</span>magen
-            </label>
-            <input
-              type="text"
-              id="imgTheme"
-              name="imgTheme"
-              placeholder="Introduce la URL"
-              className="text-md bg-transparent rounded-lg"
-            />
-          </div>
+        <div className="grid grid-cols-4 gap-4">
+          <label htmlFor="name" className="font-semibold text-xl">
+            <span className="text-red-500 text-2xl">N</span>ombre
+          </label>
+          <input
+            type="text"
+            id="name"
+            name="nameTheme"
+            placeholder="Introdúcelo aqui"
+            className="text-md bg-transparent rounded-lg col-span-3"
+          />
         </div>
         <hr className="my-5" />
         <div className="flex justify-center mb-5">

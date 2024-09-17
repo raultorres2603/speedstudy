@@ -12,7 +12,7 @@ import { SubTheme } from "./NewTheme";
 interface User {
   username: string;
   _id: string;
-  themes?: { name: string; _id: string; img: string; subThemes: SubTheme[] }[];
+  themes?: { name: string; _id: string; subThemes: SubTheme[] }[];
 }
 
 export const Home = () => {

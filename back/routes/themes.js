@@ -27,7 +27,6 @@ router.post("/new", async function (req, res, next) {
           .collection("themes")
           .insertOne({
             name: req.body.theme.name,
-            img: req.body.theme.img,
             subThemes: req.body.theme.subThemes,
             creator: new ObjectId(payload.user._id),
           });

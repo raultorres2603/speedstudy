@@ -24,7 +24,7 @@ const router = createBrowserRouter([
     loader: () => {
       const token = getCookie("ssTok");
       if (token) {
-        throw redirect("/home");
+        return redirect("/home");
       }
       return redirect("/login");
     },
@@ -104,9 +104,7 @@ const router = createBrowserRouter([
         throw toast.error("Rellena todos los datos", { id: loadingToast });
       }
       try {
-        const logReq = await logIn(username as string, password as string);
-        const token = (await logReq.json()).token;
-        setCookie("ssTok", token, 1);
+        await logIn(username as string, password as string);
         return redirect("/home");
       } catch (error) {
         throw redirect("/login?error=" + error);
