@@ -41,7 +41,8 @@ export const logInWithGoogle = async (token: string) => {
   if (!reqLogin.ok) {
     throw reqLogin.status;
   }
-  setCookie("ssTok", (await reqLogin.json()).token, 1);
+  const tokenGen = await reqLogin.json();
+  setCookie("ssTok", tokenGen, 1);
   return reqLogin;
 };
 

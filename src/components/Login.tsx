@@ -88,14 +88,14 @@ export const Login = () => {
               name="username"
               id="username"
               placeholder="Email"
-              className="inputLogIn text-xl rounded-lg text-center bg-sky-200 border-2 border-black"
+              className="inputLogIn text-xl rounded-lg text-center bg-sky-200 border-2 border-black text-zinc-900"
             />
             <input
-              type="text"
+              type="password"
               name="password"
               id="password"
               placeholder="Password"
-              className="inputLogIn text-xl rounded-lg text-center bg-sky-200 border-2 border-black"
+              className="inputLogIn text-xl rounded-lg text-center bg-sky-200 border-2 border-black text-zinc-900"
             />
           </div>
           <div className="grid grid-cols-2 gap-4 mx-10 my-5">
