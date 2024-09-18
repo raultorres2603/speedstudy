@@ -31,7 +31,7 @@ export const EditTheme = () => {
     try {
       await updateTheme(theme._id as string, theme);
       toast.success("Tema actualizado", { id: loadingToast });
-      return redirect("home");
+      return redirect("/home");
     } catch (error) {
       switch (error) {
         case "404":

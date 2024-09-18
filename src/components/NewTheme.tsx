@@ -41,7 +41,7 @@ export const NewTheme = () => {
     try {
       await createTheme(newTheme);
       toast.success("Tema creado", { id: loadingToast });
-      return redirect("home");
+      return redirect("/home");
     } catch (error) {
       toast.error(`Error al crear el tema (${error})`, { id: loadingToast });
     }
