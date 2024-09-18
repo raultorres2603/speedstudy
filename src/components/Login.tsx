@@ -13,7 +13,7 @@ export const Login = () => {
       try {
         await logInWithGoogle(tokenResponse.access_token);
         toast.success("Sesion iniciada");
-        return window.location.replace("/#/home");
+        return (window.location.pathname = "/#/home");
       } catch (error) {
         switch (error) {
           case "404":
