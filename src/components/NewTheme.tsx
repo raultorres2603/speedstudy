@@ -6,7 +6,12 @@ import { createTheme } from "../functions/themes";
 
 export interface SubTheme {
   name: string;
-  carts: object[];
+  carts: Cart[];
+}
+
+export interface Cart {
+  question: string;
+  answer: string;
 }
 
 export const NewTheme = () => {
@@ -27,10 +32,8 @@ export const NewTheme = () => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const nameTheme = formData.get("nameTheme");
-    const imgTheme = formData.get("imgTheme");
     const newTheme = {
       name: nameTheme as string,
-      img: imgTheme as string,
       subThemes: subThemes,
       carts: [],
     };
@@ -40,7 +43,6 @@ export const NewTheme = () => {
       toast.success("Tema creado", { id: loadingToast });
       return (window.location.pathname = "/home");
     } catch (error) {
-      console.log(error);
       toast.error(`Error al crear el tema (${error})`, { id: loadingToast });
     }
   };
@@ -48,31 +50,17 @@ export const NewTheme = () => {
   return (
     <div className="createTheme mx-3">
       <Form onSubmit={handleSubmit}>
-        <div className="grid grid-cols-2 gap-4">
-          <div className="inputGroup">
-            <label htmlFor="name" className="font-semibold text-xl">
-              <span className="text-red-500 text-2xl">N</span>ombre
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="nameTheme"
-              placeholder="Introdúcelo aqui"
-              className="text-md bg-transparent rounded-lg"
-            />
-          </div>
-          <div className="inputGroup">
-            <label htmlFor="imgTheme" className="font-semibold text-xl">
-              <span className="text-red-500 text-2xl">I</span>magen
-            </label>
-            <input
-              type="text"
-              id="imgTheme"
-              name="imgTheme"
-              placeholder="Introduce la URL"
-              className="text-md bg-transparent rounded-lg"
-            />
-          </div>
+        <div className="grid grid-cols-4 gap-4">
+          <label htmlFor="name" className="font-semibold text-xl">
+            <span className="text-red-500 text-2xl">N</span>ombre
+          </label>
+          <input
+            type="text"
+            id="name"
+            name="nameTheme"
+            placeholder="Introdúcelo aqui"
+            className="text-md bg-slate-100 rounded-lg col-span-3 text-center border-2 border-black text-zinc-900"
+          />
         </div>
         <hr className="my-5" />
         <div className="flex justify-center mb-5">
@@ -81,7 +69,7 @@ export const NewTheme = () => {
             nidades
           </div>
           <div
-            className="addButton ml-2"
+            className="addButton ml-2 items-center"
             onClick={() => {
               if (subThemes.length > 0) {
                 if (subThemes[subThemes.length - 1].name.trim() !== "") {
@@ -92,7 +80,7 @@ export const NewTheme = () => {
               }
             }}
           >
-            <PlusCircleIcon className="w-8 h-auto text-slate-100" />
+            <PlusCircleIcon className="w-8 h-auto text-slate-50" />
           </div>
         </div>
         <div className="grid grid-rows-1">
@@ -102,14 +90,14 @@ export const NewTheme = () => {
                 <div className="inputGroup grid grid-cols-4 gap-4">
                   <div className="nameSubTheme col-span-3">
                     {subTheme.name.trim() !== "" ? (
-                      <div className="nameConfirmed bg-sky-500 rounded-lg text-center text-md font-semibold">
+                      <div className="nameConfirmed bg-sky-500 rounded-lg text-center text-md font-semibold border-2 border-black">
                         {subTheme.name}
                       </div>
                     ) : (
                       <input
                         type="text"
                         name="subTheme"
-                        className="text-md font-semibold rounded-lg w-full bg-slate-100 text-slate-800 text-center"
+                        className="text-md font-semibold rounded-lg w-full bg-slate-100 text-slate-800 text-center border-2 border-black"
                         placeholder="Titulo (Enter para confirmar)"
                         onKeyDownCapture={(e) => {
                           if (

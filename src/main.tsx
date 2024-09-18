@@ -7,6 +7,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import { Login } from "./components/Login";
+import { Play } from "./components/Play";
 import { Home } from "./components/Home";
 import { NewTheme } from "./components/NewTheme";
 import { getCookie, setCookie } from "./functions/cookies";
@@ -14,7 +15,7 @@ import { logIn, register, getInfo } from "./functions/user";
 import { Register } from "./components/Register";
 import toast, { Toaster } from "react-hot-toast";
 import { Layout } from "./components/Layout";
-import { deleteTheme, getTheme } from "./functions/themes";
+import { deleteTheme, getTheme, getThemeInfo } from "./functions/themes";
 import { EditTheme } from "./components/EditTheme";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
@@ -24,7 +25,7 @@ const router = createBrowserRouter([
     loader: () => {
       const token = getCookie("ssTok");
       if (token) {
-        throw redirect("/home");
+        return redirect("/home");
       }
       return redirect("/login");
     },
@@ -55,6 +56,9 @@ const router = createBrowserRouter([
       const formData = await request.formData();
       const username = formData.get("username");
       const password = formData.get("password");
+      if (!username || !password) {
+        throw toast.error("Rellena todos los datos", { id: loadingToast });
+      }
       try {
         await register(username as string, password as string);
         return redirect("/login?success=200");
@@ -64,6 +68,7 @@ const router = createBrowserRouter([
         toast.dismiss(loadingToast);
       }
     },
+    errorElement: <Register />,
   },
   {
     path: "/home",
@@ -96,10 +101,11 @@ const router = createBrowserRouter([
       const formData = await request.formData();
       const username = formData.get("username");
       const password = formData.get("password");
+      if (!username || !password) {
+        throw toast.error("Rellena todos los datos", { id: loadingToast });
+      }
       try {
-        const logReq = await logIn(username as string, password as string);
-        const token = (await logReq.json()).token;
-        setCookie("ssTok", token, 1);
+        await logIn(username as string, password as string);
         return redirect("/home");
       } catch (error) {
         throw redirect("/login?error=" + error);
@@ -157,7 +163,6 @@ const router = createBrowserRouter([
           }
           const loadingToast = toast.loading("Cargando...");
           try {
-            console.log(params);
             const theme = await getTheme(params.themeId as string);
             toast.success("Tema cargado", { id: loadingToast });
             return theme;
@@ -176,6 +181,32 @@ const router = createBrowserRouter([
         errorElement: (
           <Layout title="Inicio">
             <Home />
+          </Layout>
+        ),
+      },
+      {
+        path: "play/:themeId",
+        loader: async ({ params }) => {
+          console.log(params.themeId);
+          const token = getCookie("ssTok");
+          if (!token) {
+            throw redirect("/login");
+          }
+          const loadingToast = toast.loading("Cargando...");
+          try {
+            const theme = await getThemeInfo(params.themeId as string);
+            toast.success("Tema cargado", { id: loadingToast });
+            return theme;
+          } catch (error) {
+            toast.error(`Error al cargar el tema (${error})`, {
+              id: loadingToast,
+            });
+            throw redirect("/home?error=" + error + "&action=play");
+          }
+        },
+        element: (
+          <Layout title="Jugar" goBack="/home">
+            <Play />
           </Layout>
         ),
       },

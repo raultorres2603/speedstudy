@@ -12,7 +12,7 @@ import { SubTheme } from "./NewTheme";
 interface User {
   username: string;
   _id: string;
-  themes?: { name: string; _id: string; img: string; subThemes: SubTheme[] }[];
+  themes?: { name: string; _id: string; subThemes: SubTheme[] }[];
 }
 
 export const Home = () => {
@@ -26,6 +26,8 @@ export const Home = () => {
         case "404":
           if (searchParams.get("action") === "edit") {
             toast.error("El tema no existe o no se puede editar.");
+          } else if (searchParams.get("action") === "play") {
+            toast.error("El tema no existe o no se puede jugar.");
           } else {
             toast.error("Error al borrar el tema");
           }
@@ -50,24 +52,25 @@ export const Home = () => {
       <div className="themesTitle text-xl font-semibold mx-5">
         <div className="flex">
           <div className="title">
-            <span className="text-red-500 text-3xl">T</span>emas
+            <span className="dark:text-red-500 text-sky-500 text-3xl">T</span>
+            emas
           </div>
           <Link
             to={"/theme/new"}
             className="transition ease-in-out w-9 h-9 ml-1 hover:scale:110 active:scale-90 items-start"
           >
-            <PlusCircleIcon stroke="red" />
+            <PlusCircleIcon className="dark:text-red-500 text-sky-500" />
           </Link>
         </div>
       </div>
-      <div className="themesSubtitle text-xs font-light mx-10">
+      <div className="themesSubtitle text-xs dark:font-light mx-10">
         (Consulta tus temas creados)
       </div>
-      {data.user.themes ? (
+      {data.user.themes && data.user.themes.length > 0 ? (
         <div className="grid grid-rows-1 gap-2 mt-5 mx-5">
           {data.user.themes.map((theme) => (
             <div
-              className="transition ease-in-out themesCont bg-slate-50 rounded-lg flex relative overflow-hidden"
+              className="transition ease-in-out themesCont dark:bg-slate-50 bg-sky-200 rounded-lg flex relative overflow-hidden border-4 border-zinc-900"
               key={theme._id}
             >
               <div className="grid grid-cols-3">
@@ -79,7 +82,10 @@ export const Home = () => {
                     to={`/theme/edit/${theme._id}`}
                     className="transition ease-in-out"
                   >
-                    <PencilSquareIcon className="transition ease-in-out w-8 h-8 hover:scale:110 active:scale-90 text-sky-500" />
+                    <PencilSquareIcon
+                      className="transition ease-in-out w-8 h-8 hover:scale:110 active:scale-90 text-sky-500"
+                      stroke="black"
+                    />
                   </Link>
                   {theme.subThemes[0].carts.length > 0 ? (
                     <Link
@@ -88,11 +94,13 @@ export const Home = () => {
                     >
                       <PlayCircleIcon
                         className={`transition ease-in-out w-8 h-8 hover:scale:110 active:scale-90 text-green-500`}
+                        stroke="black"
                       />
                     </Link>
                   ) : (
                     <PlayCircleIcon
                       className={`transition ease-in-out w-8 h-8 hover:scale:110 active:scale-90 text-zinc-500`}
+                      stroke="black"
                     />
                   )}
 
@@ -100,7 +108,10 @@ export const Home = () => {
                     to={`/theme/remove/${theme._id}`}
                     className="transition ease-in-out"
                   >
-                    <TrashIcon className="transition ease-in-out w-8 h-8 hover:scale:110 active:scale-90 text-red-500" />
+                    <TrashIcon
+                      className="transition ease-in-out w-8 h-8 hover:scale:110 active:scale-90 text-red-500"
+                      stroke="black"
+                    />
                   </Link>
                 </div>
               </div>
