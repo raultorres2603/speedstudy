@@ -1,7 +1,12 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import { redirect, RouterProvider, createHashRouter } from "react-router-dom";
+import {
+  redirect,
+  RouterProvider,
+  createHashRouter,
+  Navigate,
+} from "react-router-dom";
 import { Login } from "./components/Login";
 import { Play } from "./components/Play";
 import { Home } from "./components/Home";
@@ -18,18 +23,13 @@ import { GoogleOAuthProvider, googleLogout } from "@react-oauth/google";
 const router = createHashRouter([
   {
     path: "/",
-    loader: () => {
-      const token = getCookie("ssTok");
-      if (token) {
-        return redirect("/home");
-      }
-      return redirect("/login");
-    },
+    element: <Navigate to="/login" />,
   },
   {
     path: "/login",
     element: <Login />,
     loader: () => {
+      console.log("Hola", "login");
       const token = getCookie("ssTok");
       if (token) {
         return redirect("/home");
@@ -39,7 +39,7 @@ const router = createHashRouter([
   },
   {
     path: "/logout",
-    loader: async () => {
+    loader: () => {
       setCookie("ssTok", "", 0);
       googleLogout();
       return redirect("/login");
