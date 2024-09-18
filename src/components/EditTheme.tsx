@@ -1,4 +1,4 @@
-import { redirect, useLoaderData } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 import { Theme, updateTheme } from "../functions/themes";
 import { useState } from "react";
 import { PlusCircleIcon, MinusCircleIcon } from "@heroicons/react/24/solid";
@@ -31,7 +31,7 @@ export const EditTheme = () => {
     try {
       await updateTheme(theme._id as string, theme);
       toast.success("Tema actualizado", { id: loadingToast });
-      return redirect("/home");
+      return (window.location.pathname = "/#/home");
     } catch (error) {
       switch (error) {
         case "404":
