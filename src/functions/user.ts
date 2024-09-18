@@ -1,3 +1,4 @@
+import { redirect } from "react-router-dom";
 import cfg from "../config/config.json";
 import { setCookie } from "./cookies";
 import { googleLogout } from "@react-oauth/google";
@@ -77,5 +78,5 @@ export const getInfo = async (token: string) => {
 export const logOut = () => {
   setCookie("ssTok", "", 0);
   googleLogout();
-  return (window.location.pathname = "/login");
+  return redirect("login");
 };
