@@ -1,4 +1,4 @@
-import { Navigate, useLoaderData } from "react-router-dom";
+import { useNavigate, useLoaderData } from "react-router-dom";
 import { Theme, updateTheme } from "../functions/themes";
 import { useState } from "react";
 import { PlusCircleIcon, MinusCircleIcon } from "@heroicons/react/24/solid";
@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 export const EditTheme = () => {
   const { theme } = useLoaderData() as { theme: Theme };
   const [subThemes, setSubThemes] = useState<Array<SubTheme>>(theme.subThemes);
+  const navigate = useNavigate();
 
   const updateThemeF = async () => {
     const loadingToast = toast.loading("Actualizando tema...");
@@ -31,7 +32,7 @@ export const EditTheme = () => {
     try {
       await updateTheme(theme._id as string, theme);
       toast.success("Tema actualizado", { id: loadingToast });
-      return <Navigate to={"/home"} />;
+      return navigate("/home");
     } catch (error) {
       switch (error) {
         case "404":

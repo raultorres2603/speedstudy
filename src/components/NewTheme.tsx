@@ -1,4 +1,4 @@
-import { Form, Navigate } from "react-router-dom";
+import { Form, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { PlusCircleIcon, MinusCircleIcon } from "@heroicons/react/24/solid";
 import toast from "react-hot-toast";
@@ -16,6 +16,7 @@ export interface Cart {
 
 export const NewTheme = () => {
   const [subThemes, setSubThemes] = useState<Array<SubTheme>>([]);
+  const navigate = useNavigate();
 
   const eliminarElemento = (index: number) => {
     // Usamos filter para crear un nuevo array sin el elemento en el índice especificado
@@ -41,7 +42,7 @@ export const NewTheme = () => {
     try {
       await createTheme(newTheme);
       toast.success("Tema creado", { id: loadingToast });
-      return <Navigate to={"/home"} />;
+      return navigate("/home");
     } catch (error) {
       toast.error(`Error al crear el tema (${error})`, { id: loadingToast });
     }
