@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import toast from "react-hot-toast";
-import { Form, useSearchParams, Link, redirect } from "react-router-dom";
+import { Form, useSearchParams, Link } from "react-router-dom";
 import { useGoogleLogin } from "@react-oauth/google";
 import { logInWithGoogle } from "../functions/user";
 
@@ -13,7 +13,7 @@ export const Login = () => {
       try {
         await logInWithGoogle(tokenResponse.access_token);
         toast.success("Sesion iniciada");
-        return redirect("/home");
+        return window.location.replace("/#/home");
       } catch (error) {
         switch (error) {
           case "404":

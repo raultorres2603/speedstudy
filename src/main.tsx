@@ -32,7 +32,7 @@ const router = createHashRouter([
     loader: () => {
       const token = getCookie("ssTok");
       if (token) {
-        throw redirect("/home");
+        return redirect("/home");
       }
       return null;
     },
@@ -43,7 +43,7 @@ const router = createHashRouter([
     loader: () => {
       const token = getCookie("ssTok");
       if (token) {
-        throw redirect("/home");
+        return redirect("/home");
       }
       return null;
     },
@@ -59,7 +59,7 @@ const router = createHashRouter([
         await register(username as string, password as string);
         return redirect("/login?success=200");
       } catch (error) {
-        throw redirect("/register?error=" + error);
+        return redirect("/register?error=" + error);
       } finally {
         toast.dismiss(loadingToast);
       }
@@ -76,7 +76,7 @@ const router = createHashRouter([
     loader: async () => {
       const token = getCookie("ssTok");
       if (!token) {
-        throw redirect("/login");
+        return redirect("/login");
       }
       try {
         const userInfo = await getInfo(token);
@@ -85,7 +85,7 @@ const router = createHashRouter([
         switch (error) {
           case "401":
             setCookie("ssTok", "", 0);
-            throw redirect("/login");
+            return redirect("/login");
             break;
           default:
             break;
@@ -104,7 +104,7 @@ const router = createHashRouter([
         await logIn(username as string, password as string);
         return redirect("/home");
       } catch (error) {
-        throw redirect("/login?error=" + error);
+        return redirect("/login?error=" + error);
       } finally {
         toast.dismiss(loadingToast);
       }
@@ -120,7 +120,7 @@ const router = createHashRouter([
         loader: () => {
           const token = getCookie("ssTok");
           if (!token) {
-            throw redirect("/login");
+            return redirect("/login");
           }
           return null;
         },
@@ -135,7 +135,7 @@ const router = createHashRouter([
         loader: async ({ params }) => {
           const token = getCookie("ssTok");
           if (!token) {
-            throw redirect("/login");
+            return redirect("/login");
           }
           const loadingToast = toast.loading("Eliminando...");
           try {
@@ -146,7 +146,7 @@ const router = createHashRouter([
             toast.error(`Error al eliminar el tema (${error})`, {
               id: loadingToast,
             });
-            throw redirect("/home?error=" + error + "&action=remove");
+            return redirect("/home?error=" + error + "&action=remove");
           }
         },
       },
@@ -155,7 +155,7 @@ const router = createHashRouter([
         loader: async ({ params }) => {
           const token = getCookie("ssTok");
           if (!token) {
-            throw redirect("/login");
+            return redirect("/login");
           }
           const loadingToast = toast.loading("Cargando...");
           try {
@@ -166,7 +166,7 @@ const router = createHashRouter([
             toast.error(`Error al cargar el tema (${error})`, {
               id: loadingToast,
             });
-            throw redirect("/home?error=" + error + "&action=edit");
+            return redirect("/home?error=" + error + "&action=edit");
           }
         },
         element: (
@@ -186,7 +186,7 @@ const router = createHashRouter([
           console.log(params.themeId);
           const token = getCookie("ssTok");
           if (!token) {
-            throw redirect("/login");
+            return redirect("/login");
           }
           const loadingToast = toast.loading("Cargando...");
           try {
@@ -197,7 +197,7 @@ const router = createHashRouter([
             toast.error(`Error al cargar el tema (${error})`, {
               id: loadingToast,
             });
-            throw redirect("/home?error=" + error + "&action=play");
+            return redirect("/home?error=" + error + "&action=play");
           }
         },
         element: (
