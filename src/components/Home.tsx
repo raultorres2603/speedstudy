@@ -26,6 +26,8 @@ export const Home = () => {
         case "404":
           if (searchParams.get("action") === "edit") {
             toast.error("El tema no existe o no se puede editar.");
+          } else if (searchParams.get("action") === "play") {
+            toast.error("El tema no existe o no se puede jugar.");
           } else {
             toast.error("Error al borrar el tema");
           }

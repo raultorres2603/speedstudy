@@ -59,7 +59,7 @@ export const NewTheme = () => {
             id="name"
             name="nameTheme"
             placeholder="Introdúcelo aqui"
-            className="text-md bg-slate-100 rounded-lg col-span-3 text-center border-2 border-black"
+            className="text-md bg-slate-100 rounded-lg col-span-3 text-center border-2 border-black text-zinc-900"
           />
         </div>
         <hr className="my-5" />

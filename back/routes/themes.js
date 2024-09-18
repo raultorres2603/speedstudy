@@ -12,6 +12,43 @@ const client = new MongoClient(uri, {
   },
 });
 
+router.get("/info/:themeId", async function (req, res, next) {
+  const token = req.headers.authorization.split(" ")[1];
+  try {
+    const { payload } = await jose.jwtVerify(
+      token,
+      new TextEncoder().encode(process.env.SKT)
+    );
+
+    if (!payload.user) {
+      res.status(401).json({ error: "No token provided" });
+    }
+    const { user } = payload;
+
+    try {
+      await client.connect();
+      try {
+        const theme = await client
+          .db("sscards")
+          .collection("themes")
+          .findOne({
+            _id: new ObjectId(req.params.themeId),
+            creator: new ObjectId(user._id),
+          });
+        res.status(200).json({ theme: theme });
+      } catch (error) {
+        res.status(404).json({ error: error });
+      } finally {
+        await client.close();
+      }
+    } catch (error) {
+      res.status(500).json({ error: error });
+    }
+  } catch (error) {
+    res.status(401).json({ error: error });
+  }
+});
+
 router.post("/new", async function (req, res, next) {
   const token = req.headers.authorization.split(" ")[1];
   try {

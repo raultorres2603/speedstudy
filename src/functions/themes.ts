@@ -106,3 +106,17 @@ export const getTheme = async (themeId: string) => {
   }
   return await req.json();
 };
+
+export const getThemeInfo = async (themeId: string) => {
+  const req = await fetch(cfg.domain + "/api/themes/info/" + themeId, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + getCookie("ssTok"),
+    },
+  });
+  if (!req.ok) {
+    throw req.status;
+  }
+  return await req.json();
+};
