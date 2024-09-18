@@ -67,7 +67,7 @@ const router = createHashRouter([
     errorElement: <Register />,
   },
   {
-    path: "/home",
+    path: "home",
     element: (
       <Layout title="Inicio">
         <Home />
@@ -113,7 +113,7 @@ const router = createHashRouter([
   },
   // THEMES ROUTES
   {
-    path: "/theme",
+    path: "theme",
     children: [
       {
         path: "new",
