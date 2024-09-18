@@ -20,19 +20,21 @@ export const Layout = ({
         <div className="flex justify-center">
           {goBack && (
             <Link to={goBack}>
-              <BackwardIcon className="w-10 h-10 mr-1 mt-5 hover:cursor-pointer rounded-full text-red-600" />
+              <BackwardIcon className="w-10 h-10 mr-1 mt-5 hover:cursor-pointer rounded-full dark:text-red-500 text-sky-500" />
             </Link>
           )}
           <div className="homeTitle mt-5 text-center text-4xl font-semibold">
-            <span className="text-red-500 text-5xl">S</span>peed
-            <span className="text-red-500 text-5xl">S</span>tudy
+            <span className="dark:text-red-500 text-sky-500 text-5xl">S</span>
+            peed
+            <span className="dark:text-red-500 text-sky-500 text-5xl">S</span>
+            tudy
           </div>
           <div className="buttonLogOut" onClick={() => logOut()}>
-            <ArrowLeftEndOnRectangleIcon className="w-10 h-10 ml-1 mt-5 hover:cursor-pointer rounded-full text-red-600" />
+            <ArrowLeftEndOnRectangleIcon className="w-10 h-10 ml-1 mt-5 hover:cursor-pointer rounded-full dark:text-red-500 text-sky-500" />
           </div>
         </div>
 
-        <div className="homeSubtitle text-center mb-5 text-md font-light">
+        <div className="homeSubtitle text-center mb-5 text-md dark:font-light">
           ({title})
         </div>
       </div>

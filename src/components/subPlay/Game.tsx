@@ -8,6 +8,7 @@ import {
 } from "@heroicons/react/24/solid";
 import toast from "react-hot-toast";
 import ProgressBar from "@ramonak/react-progress-bar";
+import { Results } from "./Results";
 
 export const Game = (props: { subThemes: SubTheme[] }) => {
   const subThemes = props.subThemes;
@@ -54,6 +55,7 @@ export const Game = (props: { subThemes: SubTheme[] }) => {
     }
 
     if (actualCart < carts.length - 1) {
+      setFaceCart(0);
       setActualCart(actualCart + 1);
     } else {
       setFinished(true);
@@ -69,7 +71,13 @@ export const Game = (props: { subThemes: SubTheme[] }) => {
   };
 
   if (finished) {
-    return <div className="finished">ACABAO</div>;
+    return (
+      <Results
+        successCarts={successCarts}
+        failedCarts={failedCarts}
+        mustSeeCarts={mustSee}
+      />
+    );
   } else {
     return (
       <div className="subGame">
@@ -98,17 +106,19 @@ export const Game = (props: { subThemes: SubTheme[] }) => {
             }}
           />
           {carts.length > 0 && (
-            <div className="contentOfTheCart overflow-y-auto">
-              <div className="text items-center grid grid-rows-1 text-2xl my-24 mx-5 h-full">
-                {faceCart == 0 ? (
-                  <div className="text-slate-100">
-                    {carts[actualCart].question}
-                  </div>
-                ) : (
-                  <div className="text-zinc-900">
-                    {carts[actualCart].answer}
-                  </div>
-                )}
+            <div className="contentOfTheCart">
+              <div className="text w-full overflow-x-hidden overflow-y-scroll h-96">
+                <div className="text items-center grid grid-rows-1 text-2xl my-14 text-wrap mx-5">
+                  {faceCart == 0 ? (
+                    <div className="text-slate-100">
+                      {carts[actualCart].question}
+                    </div>
+                  ) : (
+                    <div className="text-zinc-900">
+                      {carts[actualCart].answer}
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           )}

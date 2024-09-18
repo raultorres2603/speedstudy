@@ -187,7 +187,7 @@ export const EditTheme = () => {
       <div className="grid grid-rows-1">
         <button
           type="button"
-          className="transition ease-in-out hover:scale-105 active:scale-90 bg-red-500 rounded-lg text-slate-100 p-2 w-full hover:bg-red-600"
+          className="transition ease-in-out hover:scale-105 active:scale-90 bg-red-500 rounded-lg text-slate-100 p-2 w-full hover:bg-red-600 border-2 border-black"
           onClick={() => {
             if (subThemes.length == 0)
               return toast.error("Debes agregar un tema");

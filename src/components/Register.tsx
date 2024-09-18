@@ -29,8 +29,8 @@ export const Register = () => {
     <div className="registerCont">
       <div className="grid grid-rows-1">
         <div className="registerTitle mt-5 text-center text-4xl font-semibold">
-          <span className="text-red-500 text-6xl">S</span>peed
-          <span className="text-red-500 text-6xl">S</span>tudy
+          <span className="dark:text-red-500 text-sky-500 text-6xl">S</span>peed
+          <span className="dark:text-red-500 text-sky-500 text-6xl">S</span>tudy
         </div>
         <div className="registerSub text-center mb-5 text-md font-light">
           (Register)
@@ -44,14 +44,14 @@ export const Register = () => {
               name="username"
               id="username"
               placeholder="Email"
-              className="inputLogIn text-xl rounded-lg text-center"
+              className="inputLogIn text-xl rounded-lg text-center bg-sky-200 border-2 border-black"
             />
             <input
               type="text"
               name="password"
               id="password"
               placeholder="Password"
-              className="inputLogIn text-xl rounded-lg text-center"
+              className="inputLogIn text-xl rounded-lg text-center bg-sky-200 border-2 border-black"
             />
           </div>
           <div className="grid grid-cols-2 gap-4 mx-10 my-5">

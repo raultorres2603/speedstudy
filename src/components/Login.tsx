@@ -72,8 +72,8 @@ export const Login = () => {
     <div className="logInComp">
       <div className="grid grid-rows-1">
         <div className="loginTitle mt-5 text-center text-4xl font-semibold">
-          <span className="text-red-500 text-6xl">S</span>peed
-          <span className="text-red-500 text-6xl">S</span>tudy
+          <span className="dark:text-red-500 text-sky-500 text-6xl">S</span>peed
+          <span className="dark:text-red-500 text-sky-500 text-6xl">S</span>tudy
         </div>
         <div className="loginSubtitle text-center mb-5 text-md font-light">
           (LogIn)
@@ -87,14 +87,14 @@ export const Login = () => {
               name="username"
               id="username"
               placeholder="Email"
-              className="inputLogIn text-xl rounded-lg text-center"
+              className="inputLogIn text-xl rounded-lg text-center bg-sky-200 border-2 border-black"
             />
             <input
               type="text"
               name="password"
               id="password"
               placeholder="Password"
-              className="inputLogIn text-xl rounded-lg text-center"
+              className="inputLogIn text-xl rounded-lg text-center bg-sky-200 border-2 border-black"
             />
           </div>
           <div className="grid grid-cols-2 gap-4 mx-10 my-5">

@@ -52,24 +52,25 @@ export const Home = () => {
       <div className="themesTitle text-xl font-semibold mx-5">
         <div className="flex">
           <div className="title">
-            <span className="text-red-500 text-3xl">T</span>emas
+            <span className="dark:text-red-500 text-sky-500 text-3xl">T</span>
+            emas
           </div>
           <Link
             to={"/theme/new"}
             className="transition ease-in-out w-9 h-9 ml-1 hover:scale:110 active:scale-90 items-start"
           >
-            <PlusCircleIcon stroke="red" />
+            <PlusCircleIcon className="dark:text-red-500 text-sky-500" />
           </Link>
         </div>
       </div>
-      <div className="themesSubtitle text-xs font-light mx-10">
+      <div className="themesSubtitle text-xs dark:font-light mx-10">
         (Consulta tus temas creados)
       </div>
       {data.user.themes && data.user.themes.length > 0 ? (
         <div className="grid grid-rows-1 gap-2 mt-5 mx-5">
           {data.user.themes.map((theme) => (
             <div
-              className="transition ease-in-out themesCont bg-slate-50 rounded-lg flex relative overflow-hidden border-4 border-zinc-900"
+              className="transition ease-in-out themesCont dark:bg-slate-50 bg-sky-200 rounded-lg flex relative overflow-hidden border-4 border-zinc-900"
               key={theme._id}
             >
               <div className="grid grid-cols-3">
