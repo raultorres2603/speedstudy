@@ -77,5 +77,5 @@ export const getInfo = async (token: string) => {
 export const logOut = () => {
   setCookie("ssTok", "", 0);
   googleLogout();
-  return (window.location.pathname = "/#/login");
+  return window.location.reload();
 };
