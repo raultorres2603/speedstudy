@@ -1,6 +1,5 @@
 import cfg from "../config/config.json";
 import { setCookie } from "./cookies";
-import { googleLogout } from "@react-oauth/google";
 
 export const logIn = async (username: string, password: string) => {
   const reqLogin = await fetch(cfg.domain + "/api/login", {
@@ -72,10 +71,4 @@ export const getInfo = async (token: string) => {
     throw reqInfo.status;
   }
   return reqInfo;
-};
-
-export const logOut = () => {
-  setCookie("ssTok", "", 0);
-  googleLogout();
-  return (window.location.pathname = "/#/login");
 };

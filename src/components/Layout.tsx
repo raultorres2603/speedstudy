@@ -1,9 +1,8 @@
-import { logOut } from "../functions/user";
 import {
   ArrowLeftEndOnRectangleIcon,
   BackwardIcon,
 } from "@heroicons/react/24/outline";
-import { Link } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
 
 export const Layout = ({
   children,
@@ -29,7 +28,7 @@ export const Layout = ({
             <span className="dark:text-red-500 text-sky-500 text-5xl">S</span>
             tudy
           </div>
-          <div className="buttonLogOut" onClick={() => logOut()}>
+          <div className="buttonLogOut" onClick={() => redirect("/logout")}>
             <ArrowLeftEndOnRectangleIcon className="w-10 h-10 ml-1 mt-5 hover:cursor-pointer rounded-full dark:text-red-500 text-sky-500" />
           </div>
         </div>

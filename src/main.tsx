@@ -13,7 +13,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { Layout } from "./components/Layout";
 import { deleteTheme, getTheme, getThemeInfo } from "./functions/themes";
 import { EditTheme } from "./components/EditTheme";
-import { GoogleOAuthProvider } from "@react-oauth/google";
+import { GoogleOAuthProvider, googleLogout } from "@react-oauth/google";
 
 const router = createHashRouter([
   {
@@ -35,6 +35,14 @@ const router = createHashRouter([
         return redirect("/home");
       }
       return null;
+    },
+  },
+  {
+    path: "logout",
+    loader: async () => {
+      setCookie("ssTok", "", 0);
+      googleLogout();
+      return redirect("/login");
     },
   },
   {
