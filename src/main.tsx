@@ -27,7 +27,7 @@ const router = createHashRouter([
     },
   },
   {
-    path: "login",
+    path: "/login",
     element: <Login />,
     loader: () => {
       const token = getCookie("ssTok");
@@ -38,7 +38,7 @@ const router = createHashRouter([
     },
   },
   {
-    path: "logout",
+    path: "/logout",
     loader: async () => {
       setCookie("ssTok", "", 0);
       googleLogout();
@@ -46,7 +46,7 @@ const router = createHashRouter([
     },
   },
   {
-    path: "register",
+    path: "/register",
     element: <Register />,
     loader: () => {
       const token = getCookie("ssTok");
@@ -75,7 +75,7 @@ const router = createHashRouter([
     errorElement: <Register />,
   },
   {
-    path: "home",
+    path: "/home",
     element: (
       <Layout title="Inicio">
         <Home />
@@ -121,7 +121,7 @@ const router = createHashRouter([
   },
   // THEMES ROUTES
   {
-    path: "theme",
+    path: "/theme",
     children: [
       {
         path: "new",
