@@ -1,11 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import {
-  createBrowserRouter,
-  redirect,
-  RouterProvider,
-} from "react-router-dom";
+import { redirect, RouterProvider, createHashRouter } from "react-router-dom";
 import { Login } from "./components/Login";
 import { Play } from "./components/Play";
 import { Home } from "./components/Home";
@@ -19,7 +15,7 @@ import { deleteTheme, getTheme, getThemeInfo } from "./functions/themes";
 import { EditTheme } from "./components/EditTheme";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: "/",
     loader: () => {
