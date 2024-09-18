@@ -42,7 +42,7 @@ export const logInWithGoogle = async (token: string) => {
     throw reqLogin.status;
   }
   const tokenGen = await reqLogin.json();
-  setCookie("ssTok", tokenGen, 1);
+  setCookie("ssTok", tokenGen.token, 1);
   return reqLogin;
 };
 
