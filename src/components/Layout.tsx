@@ -2,6 +2,7 @@ import {
   ArrowLeftEndOnRectangleIcon,
   BackwardIcon,
 } from "@heroicons/react/24/outline";
+import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 
 export const Layout = ({
@@ -18,7 +19,12 @@ export const Layout = ({
       <div className="grid grid-rows-1">
         <div className="flex justify-center">
           {goBack && (
-            <Link to={goBack}>
+            <Link
+              to={goBack}
+              onClick={() =>
+                toast.loading("Volviendo, espera...", { duration: 1500 })
+              }
+            >
               <BackwardIcon className="w-10 h-10 mr-1 mt-5 hover:cursor-pointer rounded-full dark:text-red-500 text-sky-500" />
             </Link>
           )}
