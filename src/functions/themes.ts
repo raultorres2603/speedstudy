@@ -40,14 +40,14 @@ export const createTheme = async (newTheme: Theme) => {
   return true;
 };
 
-export const updateTheme = async (themeId: string, newTheme: Theme) => {
+export const updateTheme = async (themeId: string, subThemes: SubTheme[]) => {
   const req = await fetch(cfg.domain + "/api/themes/edit/" + themeId, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
       Authorization: "Bearer " + getCookie("ssTok"),
     },
-    body: JSON.stringify({ theme: newTheme }),
+    body: JSON.stringify({ subThemes: subThemes }),
   });
   if (!req.ok) {
     throw req.status;

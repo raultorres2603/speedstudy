@@ -17,6 +17,7 @@ export interface Cart {
 export const NewTheme = () => {
   const [subThemes, setSubThemes] = useState<Array<SubTheme>>([]);
   const navigate = useNavigate();
+  const [canCreate, setCanCreate] = useState(false);
 
   const eliminarElemento = (index: number) => {
     // Usamos filter para crear un nuevo array sin el elemento en el índice especificado
@@ -29,6 +30,26 @@ export const NewTheme = () => {
     }
   };
 
+  const findEmptyUnity = () => {
+    if (subThemes.length === 0) {
+      toast.error("Debes introducir al menos un tema");
+      return false;
+    }
+
+    const findEmpty = subThemes.find((subTheme, i) => {
+      if (subTheme.name.trim() === "") {
+        toast.error(`El tema número ${i + 1} no tiene nombre`);
+        return true;
+      }
+    });
+
+    if (findEmpty) {
+      return true;
+    }
+
+    return false;
+  };
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -38,13 +59,19 @@ export const NewTheme = () => {
       subThemes: subThemes,
       carts: [],
     };
-    const loadingToast = toast.loading("Enviando tema a la BD...");
-    try {
-      await createTheme(newTheme);
-      toast.success("Tema creado", { id: loadingToast });
-      return navigate("/home");
-    } catch (error) {
-      toast.error(`Error al crear el tema (${error})`, { id: loadingToast });
+    if (canCreate && nameTheme?.toString().trim() !== "") {
+      const loadingToast = toast.loading("Enviando tema a la BD...");
+      try {
+        await createTheme(newTheme);
+        toast.success("Tema creado", { id: loadingToast });
+        return navigate("/home");
+      } catch (error) {
+        toast.error(`Error al crear el tema (${error})`, { id: loadingToast });
+      }
+    } else {
+      toast.error(
+        "Tienes que crear mínimo 1 unidad y ponerle un nombre al tema"
+      );
     }
   };
 
@@ -75,9 +102,11 @@ export const NewTheme = () => {
               if (subThemes.length > 0) {
                 if (subThemes[subThemes.length - 1].name.trim() !== "") {
                   setSubThemes([...subThemes, { name: "", carts: [] }]);
+                  setCanCreate(false);
                 }
               } else {
                 setSubThemes([...subThemes, { name: "", carts: [] }]);
+                setCanCreate(false);
               }
             }}
           >
@@ -108,6 +137,11 @@ export const NewTheme = () => {
                             subTheme.name = e.currentTarget.value;
                             setSubThemes([...subThemes]);
                             toast.success("Tema guardado");
+                            if (findEmptyUnity()) {
+                              setCanCreate(false);
+                            } else {
+                              setCanCreate(true);
+                            }
                           }
                         }}
                       />
@@ -126,14 +160,16 @@ export const NewTheme = () => {
             ))}
           </div>
           <hr className="my-5" />
-          <div className="grid grid-rows-1 createButton">
-            <button
-              type="submit"
-              className="transition ease-in-out hover:scale-105 active:scale-90 hover:bg-red-600 items-start bg-red-500"
-            >
-              Crear
-            </button>
-          </div>
+          {canCreate && (
+            <div className="grid grid-rows-1 createButton">
+              <button
+                type="submit"
+                className="transition ease-in-out hover:scale-105 active:scale-90 hover:bg-red-600 items-start bg-red-500"
+              >
+                Crear
+              </button>
+            </div>
+          )}
         </div>
       </Form>
     </div>

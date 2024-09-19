@@ -13,39 +13,44 @@ export const EditTheme = () => {
   const updateThemeF = async () => {
     const loadingToast = toast.loading("Actualizando tema...");
 
-    for (let i = 0; i < theme.subThemes.length; i++) {
-      const subTheme = theme.subThemes[i];
-      for (let j = 0; j < subTheme.carts.length; j++) {
-        const cart = subTheme.carts[j];
-        if (cart.question === "Pregunta" || cart.answer === "Respuesta") {
-          toast.error(
-            "Hay una unidad sin pregunta o respuesta en " + subTheme.name,
-            {
-              id: loadingToast,
-            }
-          );
-          throw "404";
+    if (subThemes.length === 0) {
+      toast.error("Debes introducir al menos un tema");
+      return;
+    } else {
+      for (let i = 0; i < subThemes.length; i++) {
+        const subTheme = subThemes[i];
+        for (let j = 0; j < subTheme.carts.length; j++) {
+          const cart = subTheme.carts[j];
+          if (cart.question === "Pregunta" || cart.answer === "Respuesta") {
+            toast.error(
+              "Hay una unidad sin pregunta o respuesta en " + subTheme.name,
+              {
+                id: loadingToast,
+              }
+            );
+            throw "404";
+          }
         }
       }
-    }
 
-    try {
-      await updateTheme(theme._id as string, theme);
-      toast.success("Tema actualizado", { id: loadingToast });
-      return navigate("/home");
-    } catch (error) {
-      switch (error) {
-        case "404":
-          toast.error("Error al actualizar el tema " + theme.name);
-          break;
-        case "500":
-          toast.error("Error de servidor");
-          break;
-        case "401":
-          toast.error("No autorizado");
-          break;
-        default:
-          break;
+      try {
+        await updateTheme(theme._id as string, subThemes);
+        toast.success("Tema actualizado", { id: loadingToast });
+        return navigate("/home");
+      } catch (error) {
+        switch (error) {
+          case "404":
+            toast.error("Error al actualizar el tema " + theme.name);
+            break;
+          case "500":
+            toast.error("Error de servidor");
+            break;
+          case "401":
+            toast.error("No autorizado");
+            break;
+          default:
+            break;
+        }
       }
     }
   };
@@ -108,9 +113,10 @@ export const EditTheme = () => {
                             confirm("¿Seguro que quieres eliminar este tema?")
                           ) {
                             const newSubThemes = subThemes.filter(
-                              (_, index) => index !== i
+                              (_) => _ !== subTheme
                             );
                             setSubThemes(newSubThemes);
+                            console.log(newSubThemes);
                           }
                         }}
                       />
