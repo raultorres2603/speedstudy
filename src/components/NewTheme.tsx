@@ -160,16 +160,14 @@ export const NewTheme = () => {
             ))}
           </div>
           <hr className="my-5" />
-          {canCreate && (
-            <div className="grid grid-rows-1 createButton">
-              <button
-                type="submit"
-                className="transition ease-in-out hover:scale-105 active:scale-90 hover:bg-red-600 items-start bg-red-500"
-              >
-                Crear
-              </button>
-            </div>
-          )}
+          <div className="grid grid-rows-1 createButton">
+            <button
+              type="submit"
+              className="transition ease-in-out hover:scale-105 active:scale-90 hover:bg-red-600 items-start bg-red-500"
+            >
+              Crear
+            </button>
+          </div>
         </div>
       </Form>
     </div>
