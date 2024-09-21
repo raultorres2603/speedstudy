@@ -155,10 +155,8 @@ export const EditTheme = () => {
                       className="rounded-lg bg-slate-200 text-zinc-900 text-center col-span-4 border-2 border-black"
                       placeholder="Pregunta"
                       value={cart.question !== "Pregunta" ? cart.question : ""}
-                      onChange={(e) => {
-                        cart.question = e.currentTarget.value;
-                        console.log(cart.question);
-                        setSubThemes([...subThemes]);
+                      onClick={(e) => {
+                        console.log(e);
                       }}
                     ></textarea>
                     <textarea
