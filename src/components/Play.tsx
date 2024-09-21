@@ -14,11 +14,9 @@ export const Play = () => {
   const selectTheme = (subTheme: SubTheme) => {
     if (selectedSubThemes.includes(subTheme)) {
       setSelectedSubThemes(selectedSubThemes.filter((st) => st !== subTheme));
-      console.log(selectedSubThemes);
       return false;
     } else {
       setSelectedSubThemes([...selectedSubThemes, subTheme]);
-      console.log(selectedSubThemes);
       return true;
     }
   };

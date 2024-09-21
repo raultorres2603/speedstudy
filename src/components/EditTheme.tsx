@@ -116,7 +116,6 @@ export const EditTheme = () => {
                               (_) => _ !== subTheme
                             );
                             setSubThemes(newSubThemes);
-                            console.log(newSubThemes);
                           }
                         }}
                       />

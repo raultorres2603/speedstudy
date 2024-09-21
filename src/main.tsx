@@ -29,7 +29,6 @@ const router = createHashRouter([
     path: "/login",
     element: <Login />,
     loader: () => {
-      console.log("Hola", "login");
       const token = getCookie("ssTok");
       if (token) {
         return redirect("/home");
@@ -191,7 +190,6 @@ const router = createHashRouter([
       {
         path: "play/:themeId",
         loader: async ({ params }) => {
-          console.log(params.themeId);
           const token = getCookie("ssTok");
           if (!token) {
             return redirect("/login");
