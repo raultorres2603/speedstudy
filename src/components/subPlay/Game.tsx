@@ -106,17 +106,28 @@ export const Game = (props: { subThemes: SubTheme[] }) => {
             }}
           />
           {carts.length > 0 && (
-            <div className="contentOfTheCart">
+            <div
+              className="contentOfTheCart"
+              onClick={() => {
+                turnFace();
+              }}
+            >
               <div className="text w-full overflow-x-hidden overflow-y-scroll h-96">
-                <div className="text items-center grid grid-rows-1 text-2xl my-14 text-wrap mx-5">
+                <div className="text items-center grid grid-rows-1 text-xl my-14 text-wrap mx-5">
                   {faceCart == 0 ? (
-                    <div className="text-slate-100">
-                      {carts[actualCart].question}
-                    </div>
+                    <div
+                      className="text-slate-100"
+                      dangerouslySetInnerHTML={{
+                        __html: carts[actualCart].question,
+                      }}
+                    />
                   ) : (
-                    <div className="text-zinc-900">
-                      {carts[actualCart].answer}
-                    </div>
+                    <div
+                      className="text-zinc-900"
+                      dangerouslySetInnerHTML={{
+                        __html: carts[actualCart].answer,
+                      }}
+                    />
                   )}
                 </div>
               </div>

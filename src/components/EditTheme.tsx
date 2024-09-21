@@ -4,6 +4,8 @@ import { useState } from "react";
 import { PlusCircleIcon, MinusCircleIcon } from "@heroicons/react/24/solid";
 import { SubTheme } from "./NewTheme";
 import toast from "react-hot-toast";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 export const EditTheme = () => {
   const { theme } = useLoaderData() as { theme: Theme };
@@ -144,34 +146,52 @@ export const EditTheme = () => {
 
               {subTheme.carts.map((cart, i) => (
                 <div
-                  className="cart grid grid-rows-1 bg-sky-200 rounded-lg gap-4 m-1"
+                  className="cart grid grid-rows-1 bg-sky-200 rounded-lg"
                   key={i}
                 >
-                  <div className="cartTitle grid grid-cols-8 gap-2">
-                    <textarea
+                  <div className="cartTitle grid grid-rows-2 gap-2 h-auto relative">
+                    <input
+                      type="text"
                       name="question"
-                      id="question"
-                      className="rounded-lg bg-slate-200 text-zinc-900 text-center col-span-4 border-2 border-black"
-                      placeholder="Pregunta"
-                      value={cart.question !== "Pregunta" ? cart.question : ""}
-                      onChange={(e) => {
-                        cart.question = e.currentTarget.value;
-                        setSubThemes([...subThemes]);
-                      }}
-                    ></textarea>
-                    <textarea
+                      value={cart.question}
+                      className="hidden"
+                    />
+                    <input
+                      type="text"
                       name="answer"
-                      id="answer"
-                      className="rounded-lg bg-slate-200 text-zinc-900 text-center col-span-3 border-2 border-black"
-                      placeholder="Respuesta"
-                      value={cart.answer !== "Respuesta" ? cart.answer : ""}
-                      onChange={(e) => {
-                        cart.answer = e.currentTarget.value;
-                        setSubThemes([...subThemes]);
-                      }}
-                    ></textarea>
+                      value={cart.answer}
+                      className="hidden"
+                    />
+                    <div className="quill rounded-lg text-zinc-900 text-center col-span-5 m-5">
+                      {" "}
+                      <ReactQuill
+                        value={
+                          cart.question === "Pregunta" ? "" : cart.question
+                        }
+                        id={`q-${i}`}
+                        onChange={(value) => {
+                          cart.question = value;
+                          setSubThemes([...subThemes]);
+                        }}
+                        className="border-2 border-black rounded-lg"
+                        placeholder="Pregunta"
+                      />
+                    </div>
+                    <div className="quill rounded-lg text-zinc-900 text-center col-span-5 m-5">
+                      <ReactQuill
+                        value={cart.answer === "Respuesta" ? "" : cart.answer}
+                        id={`a-${i}`}
+                        onChange={(value) => {
+                          cart.answer = value;
+                          setSubThemes([...subThemes]);
+                        }}
+                        className="border-2 border-black rounded-lg"
+                        placeholder="Respuesta"
+                      />
+                    </div>
+
                     <MinusCircleIcon
-                      className="w-7 h-auto text-red-500"
+                      className="w-7 h-auto text-red-500 absolute right-0"
                       onClick={() => {
                         const newSub = subTheme.carts.filter(
                           (_, index) => index !== i
