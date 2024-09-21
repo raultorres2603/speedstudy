@@ -149,8 +149,7 @@ export const EditTheme = () => {
                   key={i}
                 >
                   <div className="cartTitle grid grid-cols-8 gap-2">
-                    <input
-                      type="text"
+                    <textarea
                       name="question"
                       id="question"
                       className="rounded-lg bg-slate-200 text-zinc-900 text-center col-span-4 border-2 border-black"
@@ -158,11 +157,11 @@ export const EditTheme = () => {
                       value={cart.question !== "Pregunta" ? cart.question : ""}
                       onChange={(e) => {
                         cart.question = e.currentTarget.value;
+                        console.log(cart.question);
                         setSubThemes([...subThemes]);
                       }}
-                    />
-                    <input
-                      type="text"
+                    ></textarea>
+                    <textarea
                       name="answer"
                       id="answer"
                       className="rounded-lg bg-slate-200 text-zinc-900 text-center col-span-3 border-2 border-black"
@@ -170,9 +169,10 @@ export const EditTheme = () => {
                       value={cart.answer !== "Respuesta" ? cart.answer : ""}
                       onChange={(e) => {
                         cart.answer = e.currentTarget.value;
+                        console.log(cart.answer);
                         setSubThemes([...subThemes]);
                       }}
-                    />
+                    ></textarea>
                     <MinusCircleIcon
                       className="w-7 h-auto text-red-500"
                       onClick={() => {
