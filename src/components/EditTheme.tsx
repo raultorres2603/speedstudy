@@ -157,7 +157,6 @@ export const EditTheme = () => {
                       value={cart.question !== "Pregunta" ? cart.question : ""}
                       onChange={(e) => {
                         cart.question = e.currentTarget.value;
-                        console.log(cart.question);
                         setSubThemes([...subThemes]);
                       }}
                     ></textarea>
@@ -169,7 +168,6 @@ export const EditTheme = () => {
                       value={cart.answer !== "Respuesta" ? cart.answer : ""}
                       onChange={(e) => {
                         cart.answer = e.currentTarget.value;
-                        console.log(cart.answer);
                         setSubThemes([...subThemes]);
                       }}
                     ></textarea>
