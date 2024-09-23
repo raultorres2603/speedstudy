@@ -6,11 +6,21 @@ import { SubTheme } from "./NewTheme";
 import toast from "react-hot-toast";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { useSpring, animated, useTransition } from "@react-spring/web";
 
 export const EditTheme = () => {
   const { theme } = useLoaderData() as { theme: Theme };
   const [subThemes, setSubThemes] = useState<Array<SubTheme>>(theme.subThemes);
   const navigate = useNavigate();
+  const appear = useSpring({
+    from: { opacity: 0 },
+    to: { opacity: 1 },
+  });
+  const transitions = useTransition(subThemes, {
+    from: { opacity: 0 },
+    enter: { opacity: 1 },
+    leave: { opacity: 0 },
+  });
 
   const updateThemeF = async () => {
     const loadingToast = toast.loading("Actualizando tema...");
@@ -58,7 +68,7 @@ export const EditTheme = () => {
   };
 
   return (
-    <div className="theme mx-5">
+    <animated.div className="theme mx-5" style={appear}>
       <div className="grid grid-rows-1 text-center text-3xl font-semibold">
         <div className="titleFull">
           <span className="text-red-500 text-4xl">
@@ -81,10 +91,11 @@ export const EditTheme = () => {
         </div>
       </div>
       <div className="grid grid-rows-1 mt-3 gap-4">
-        {subThemes.map((subTheme, i) => (
-          <div
+        {transitions((style, subTheme, _, i) => (
+          <animated.div
             className="subTheme grid grid-rows-1 flex bg-sky-200 rounded-lg"
             key={i}
+            style={style}
           >
             <div className="inputGroup">
               <div className="nameSubTheme">
@@ -204,7 +215,7 @@ export const EditTheme = () => {
                 </div>
               ))}
             </div>
-          </div>
+          </animated.div>
         ))}
       </div>
       <hr className="my-5" />
@@ -221,6 +232,6 @@ export const EditTheme = () => {
           Guardar
         </button>
       </div>
-    </div>
+    </animated.div>
   );
 };

@@ -8,6 +8,7 @@ import {
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { SubTheme } from "./NewTheme";
+import { useSpring, animated } from "@react-spring/web";
 
 interface User {
   username: string;
@@ -17,6 +18,11 @@ interface User {
 
 export const Home = () => {
   const data = useLoaderData() as { user: User };
+  const appear = useSpring({
+    from: { opacity: 0 },
+    to: { opacity: 1 },
+    delay: 500,
+  });
 
   const [searchParams] = useSearchParams();
 
@@ -48,7 +54,7 @@ export const Home = () => {
   }, [searchParams]);
 
   return (
-    <div className="home">
+    <animated.div className="home" style={appear}>
       <div className="themesTitle text-xl font-semibold mx-5">
         <div className="flex">
           <div className="title">
@@ -129,6 +135,6 @@ export const Home = () => {
         </div>
       )}
       <hr className="my-5" />
-    </div>
+    </animated.div>
   );
 };

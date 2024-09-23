@@ -3,6 +3,7 @@ import { useState } from "react";
 import { PlusCircleIcon, MinusCircleIcon } from "@heroicons/react/24/solid";
 import toast from "react-hot-toast";
 import { createTheme } from "../functions/themes";
+import { useTransition, animated } from "@react-spring/web";
 
 export interface SubTheme {
   name: string;
@@ -18,6 +19,11 @@ export const NewTheme = () => {
   const [subThemes, setSubThemes] = useState<Array<SubTheme>>([]);
   const navigate = useNavigate();
   const [canCreate, setCanCreate] = useState(false);
+  const transitions = useTransition(subThemes, {
+    from: { opacity: 0 },
+    enter: { opacity: 1 },
+    leave: { opacity: 0 },
+  });
 
   const eliminarElemento = (index: number) => {
     // Usamos filter para crear un nuevo array sin el elemento en el índice especificado
@@ -115,8 +121,12 @@ export const NewTheme = () => {
         </div>
         <div className="grid grid-rows-1">
           <div className="listSubThemes grid grid-rows-auto gap-4 items-center m-4">
-            {subThemes.map((subTheme, index) => (
-              <div className="subTheme grid grid-rows-1" key={index}>
+            {transitions((style, subTheme, _, i) => (
+              <animated.div
+                className="subTheme grid grid-rows-1"
+                key={i}
+                style={style}
+              >
                 <div className="inputGroup grid grid-cols-4 gap-4">
                   <div className="nameSubTheme col-span-3">
                     {subTheme.name.trim() !== "" ? (
@@ -151,12 +161,12 @@ export const NewTheme = () => {
                     <MinusCircleIcon
                       className="w-8 h-auto text-red-500"
                       onClick={() => {
-                        eliminarElemento(index);
+                        eliminarElemento(i);
                       }}
                     />
                   )}
                 </div>
-              </div>
+              </animated.div>
             ))}
           </div>
           <hr className="my-5" />

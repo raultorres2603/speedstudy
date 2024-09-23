@@ -3,10 +3,16 @@ import toast from "react-hot-toast";
 import { Form, useSearchParams, Link, useNavigate } from "react-router-dom";
 import { useGoogleLogin } from "@react-oauth/google";
 import { logInWithGoogle } from "../functions/user";
+import { useSpring, animated } from "@react-spring/web";
 
 export const Login = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const appear = useSpring({
+    from: { opacity: 0 },
+    to: { opacity: 1 },
+    delay: 500,
+  });
 
   const login = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
@@ -70,7 +76,7 @@ export const Login = () => {
     }
   }, [searchParams]);
   return (
-    <div className="logInComp">
+    <animated.div className="logInComp" style={appear}>
       <div className="grid grid-rows-1">
         <div className="loginTitle mt-5 text-center text-4xl font-semibold">
           <span className="dark:text-red-500 text-sky-500 text-6xl">S</span>peed
@@ -125,6 +131,6 @@ export const Login = () => {
           </div>
         </Form>
       </div>
-    </div>
+    </animated.div>
   );
 };
