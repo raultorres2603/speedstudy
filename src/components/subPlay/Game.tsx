@@ -112,7 +112,14 @@ export const Game = (props: { subThemes: SubTheme[] }) => {
                 turnFace();
               }}
             >
-              <div className="text w-full overflow-scroll h-96 text-wrap">
+              <div className="text w-full overflow-scroll h-96 text-wrap relative">
+                <div
+                  className={`tag absolute top-2 left-2 text-sm ${
+                    faceCart == 0 ? "text-red-500" : "text-red-800"
+                  }`}
+                >
+                  {carts[actualCart].tag}
+                </div>
                 <div className="text items-center grid grid-rows-1 text-xl my-14 mx-5">
                   {faceCart == 0 ? (
                     <div
