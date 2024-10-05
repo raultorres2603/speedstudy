@@ -13,6 +13,7 @@ export interface SubTheme {
 export interface Cart {
   question: string;
   answer: string;
+  tag?: string;
 }
 
 export const NewTheme = () => {

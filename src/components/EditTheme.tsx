@@ -161,18 +161,6 @@ export const EditTheme = () => {
                   key={i}
                 >
                   <div className="cartTitle grid grid-rows-2 gap-2 h-auto relative">
-                    <input
-                      type="text"
-                      name="question"
-                      value={cart.question}
-                      className="hidden"
-                    />
-                    <input
-                      type="text"
-                      name="answer"
-                      value={cart.answer}
-                      className="hidden"
-                    />
                     <div className="quill rounded-lg text-zinc-900 text-center col-span-5 m-5">
                       {" "}
                       <ReactQuill
