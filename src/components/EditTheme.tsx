@@ -160,7 +160,19 @@ export const EditTheme = () => {
                   className="cart grid grid-rows-1 bg-sky-200 rounded-lg"
                   key={i}
                 >
-                  <div className="cartTitle grid grid-rows-2 gap-2 h-auto relative">
+                  <div className="cartTitle grid grid-rows-1 gap-2 h-auto relative">
+                    <div className="tagInput rounded-lg text-zinc-900 text-center col-span-5 m-5">
+                      <input
+                        type="text"
+                        onChange={(e) => {
+                          cart.tag = e.currentTarget.value;
+                          setSubThemes([...subThemes]);
+                        }}
+                        className="text-md font-semibold rounded-lg w-full bg-sky-50 text-slate-800 text-center"
+                        placeholder="Etiqueta"
+                        defaultValue={cart.tag === "Etiqueta" ? "" : cart.tag}
+                      />
+                    </div>
                     <div className="quill rounded-lg text-zinc-900 text-center col-span-5 m-5">
                       {" "}
                       <ReactQuill
