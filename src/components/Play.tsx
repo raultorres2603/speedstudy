@@ -55,7 +55,7 @@ export const Play = () => {
                 }
               }}
             >
-              <div className="title text-zinc-900">
+              <div className="title text-zinc-900 p-2">
                 <span className="text-red-500 text-2xl">
                   {subTheme.name.slice(0, 1)}
                 </span>

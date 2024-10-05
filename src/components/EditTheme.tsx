@@ -169,7 +169,7 @@ export const EditTheme = () => {
                           setSubThemes([...subThemes]);
                         }}
                         className="text-md font-semibold rounded-lg w-full bg-sky-50 text-slate-800 text-center"
-                        placeholder="Etiqueta"
+                        placeholder="Etiqueta (opcional)"
                         defaultValue={cart.tag === "Etiqueta" ? "" : cart.tag}
                       />
                     </div>
