@@ -36,32 +36,34 @@ export const Play = () => {
         </div>
         <div className="grid grid-rows-1 mt-5 gap-4">
           {theme.subThemes.map((subTheme, i) => (
-            <div
-              className="subTheme bg-slate-50 text-xl text-center rounded-lg border-2 border-black"
-              key={i}
-              onClick={(e) => {
-                if (selectTheme(subTheme) === true) {
-                  (e.target as HTMLDivElement).classList.add(
-                    "bg-sky-500",
-                    "text-slate-50",
-                    "animate-pulse"
-                  );
-                } else {
-                  (e.target as HTMLDivElement).classList.remove(
-                    "bg-sky-500",
-                    "text-slate-50",
-                    "animate-pulse"
-                  );
-                }
-              }}
-            >
-              <div className="title text-zinc-900 p-2">
-                <span className="text-red-500 text-2xl">
-                  {subTheme.name.slice(0, 1)}
-                </span>
-                {subTheme.name.slice(1)}
+            <>
+              <div
+                className="subTheme bg-slate-50 text-xl text-center rounded-lg border-2 border-black"
+                key={i}
+                onClick={(e) => {
+                  if (selectTheme(subTheme) === true) {
+                    (e.target as HTMLDivElement).classList.add(
+                      "bg-sky-500",
+                      "text-slate-50",
+                      "animate-pulse"
+                    );
+                  } else {
+                    (e.target as HTMLDivElement).classList.remove(
+                      "bg-sky-500",
+                      "text-slate-50",
+                      "animate-pulse"
+                    );
+                  }
+                }}
+              >
+                <div className="title text-zinc-900 p-2">
+                  <span className="text-red-500 text-2xl">
+                    {subTheme.name.slice(0, 1)}
+                  </span>
+                  {subTheme.name.slice(1)}
+                </div>
               </div>
-            </div>
+            </>
           ))}
         </div>
         {selectedSubThemes.length > 0 && (
